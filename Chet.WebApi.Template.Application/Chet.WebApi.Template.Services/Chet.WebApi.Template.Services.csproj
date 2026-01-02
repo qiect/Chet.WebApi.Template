@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Chet.WebApi.Template.Core\Chet.WebApi.Template.Contracts\Chet.WebApi.Template.Contracts.csproj" />
+    <ProjectReference Include="..\..\Chet.WebApi.Template.Core\Chet.WebApi.Template.Shared\Chet.WebApi.Template.Shared.csproj" />
+    <ProjectReference Include="..\..\Chet.WebApi.Template.Infrastructure\Chet.WebApi.Template.Configuration\Chet.WebApi.Template.Configuration.csproj" />
+    <ProjectReference Include="..\..\Chet.WebApi.Template.Infrastructure\Chet.WebApi.Template.Data\Chet.WebApi.Template.Data.csproj" />
+    <ProjectReference Include="..\..\Chet.WebApi.Template.Infrastructure\Chet.WebApi.Template.Caching\Chet.WebApi.Template.Caching.csproj" />
+  </ItemGroup>
+
+</Project>

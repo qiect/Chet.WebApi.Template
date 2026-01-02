@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Chet.WebApi.Template.Application\Chet.WebApi.Template.Services\Chet.WebApi.Template.Services.csproj" />
+    <ProjectReference Include="..\Chet.WebApi.Template.Application\Chet.WebApi.Template.DTOs\Chet.WebApi.Template.DTOs.csproj" />
+    <ProjectReference Include="..\Chet.WebApi.Template.Application\Chet.WebApi.Template.Mapping\Chet.WebApi.Template.Mapping.csproj" />
+    <ProjectReference Include="..\Chet.WebApi.Template.Infrastructure\Chet.WebApi.Template.Data\Chet.WebApi.Template.Data.csproj" />
+    <ProjectReference Include="..\Chet.WebApi.Template.Infrastructure\Chet.WebApi.Template.Caching\Chet.WebApi.Template.Caching.csproj" />
+    <ProjectReference Include="..\Chet.WebApi.Template.Infrastructure\Chet.WebApi.Template.Logging\Chet.WebApi.Template.Logging.csproj" />
+    <ProjectReference Include="..\Chet.WebApi.Template.Core\Chet.WebApi.Template.Shared\Chet.WebApi.Template.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
