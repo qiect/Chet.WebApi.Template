@@ -16,7 +16,7 @@ public class AuthController : ControllerBase
     /// 认证服务，用于处理认证相关的业务逻辑
     /// </summary>
     private readonly IAuthService _authService;
-    
+
     /// <summary>
     /// 日志记录器，用于记录控制器操作日志
     /// </summary>
@@ -45,7 +45,7 @@ public class AuthController : ControllerBase
     {
         _logger.LogInformation("User registration attempt with email: {Email}", registerDto.Email);
         await _authService.RegisterAsync(registerDto);
-        return Created("", Chet.WebApi.Template.Shared.ApiResponse.Ok(null, "User registered successfully", StatusCodes.Status201Created));
+        return Created("", ApiResponse.Ok(null, "User registered successfully", StatusCodes.Status201Created));
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class AuthController : ControllerBase
     {
         _logger.LogInformation("User login attempt with email: {Email}", loginDto.Email);
         var token = await _authService.LoginAsync(loginDto);
-        return Ok(Chet.WebApi.Template.Shared.ApiResponse.Ok(token, "Login successful"));
+        return Ok(ApiResponse.Ok(token, "Login successful"));
     }
 
     /// <summary>
@@ -75,6 +75,6 @@ public class AuthController : ControllerBase
     {
         _logger.LogInformation("Token refresh attempt");
         var token = await _authService.RefreshTokenAsync(refreshTokenDto);
-        return Ok(Chet.WebApi.Template.Shared.ApiResponse.Ok(token, "Token refreshed successfully"));
+        return Ok(ApiResponse.Ok(token, "Token refreshed successfully"));
     }
 }

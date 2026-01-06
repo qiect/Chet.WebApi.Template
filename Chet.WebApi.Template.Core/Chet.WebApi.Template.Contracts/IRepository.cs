@@ -12,31 +12,31 @@ namespace Chet.WebApi.Template.Contracts
         /// <param name="id">实体ID</param>
         /// <returns>实体对象，如果不存在则返回null</returns>
         Task<T> GetByIdAsync(int id);
-        
+
         /// <summary>
         /// 获取所有实体
         /// </summary>
         /// <returns>实体集合</returns>
         Task<IEnumerable<T>> GetAllAsync();
-        
+
         /// <summary>
         /// 添加实体
         /// </summary>
         /// <param name="entity">要添加的实体</param>
         Task AddAsync(T entity);
-        
+
         /// <summary>
         /// 更新实体
         /// </summary>
         /// <param name="entity">要更新的实体</param>
         Task UpdateAsync(T entity);
-        
+
         /// <summary>
         /// 删除实体
         /// </summary>
         /// <param name="entity">要删除的实体</param>
         Task DeleteAsync(T entity);
-        
+
         /// <summary>
         /// 检查实体是否存在
         /// </summary>

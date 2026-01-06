@@ -18,7 +18,7 @@ public class UsersController : ControllerBase
     /// 用户服务，用于处理用户相关的业务逻辑
     /// </summary>
     private readonly IUserService _userService;
-    
+
     /// <summary>
     /// 日志记录器，用于记录控制器操作日志
     /// </summary>
@@ -45,7 +45,7 @@ public class UsersController : ControllerBase
     {
         _logger.LogInformation("Getting all users");
         var users = await _userService.GetAllUsersAsync();
-        return Ok(Chet.WebApi.Template.Shared.ApiResponse.Ok(users, "Users retrieved successfully"));
+        return Ok(ApiResponse.Ok(users, "Users retrieved successfully"));
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class UsersController : ControllerBase
     {
         _logger.LogInformation("Getting user with id: {Id}", id);
         var user = await _userService.GetUserByIdAsync(id);
-        return Ok(Chet.WebApi.Template.Shared.ApiResponse.Ok(user, "User retrieved successfully"));
+        return Ok(ApiResponse.Ok(user, "User retrieved successfully"));
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ public class UsersController : ControllerBase
     {
         _logger.LogInformation("Creating new user");
         var user = await _userService.CreateUserAsync(userCreateDto);
-        return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, Chet.WebApi.Template.Shared.ApiResponse.Ok(user, "User created successfully", StatusCodes.Status201Created));
+        return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, ApiResponse.Ok(user, "User created successfully", StatusCodes.Status201Created));
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class UsersController : ControllerBase
     {
         _logger.LogInformation("Updating user with id: {Id}", id);
         await _userService.UpdateUserAsync(id, userUpdateDto);
-        return Ok(Chet.WebApi.Template.Shared.ApiResponse.NoContent("User updated successfully"));
+        return Ok(ApiResponse.NoContent("User updated successfully"));
     }
 
     /// <summary>
@@ -107,6 +107,6 @@ public class UsersController : ControllerBase
     {
         _logger.LogInformation("Deleting user with id: {Id}", id);
         await _userService.DeleteUserAsync(id);
-        return Ok(Chet.WebApi.Template.Shared.ApiResponse.NoContent("User deleted successfully"));
+        return Ok(ApiResponse.NoContent("User deleted successfully"));
     }
 }

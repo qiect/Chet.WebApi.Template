@@ -1,7 +1,7 @@
 using Chet.WebApi.Template.Contracts;
+using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 using System.Text.Json;
-using Microsoft.Extensions.Logging;
 
 namespace Chet.WebApi.Template.Caching
 {

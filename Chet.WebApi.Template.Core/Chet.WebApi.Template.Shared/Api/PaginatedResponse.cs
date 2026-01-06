@@ -10,37 +10,37 @@ public class PaginatedResponse<T> : ApiResponse<List<T>>
     /// 泛型响应数据
     /// </summary>
     public new List<T>? Data { get; set; }
-    
+
     /// <summary>
     /// 当前页码
     /// </summary>
     public int PageNumber { get; set; }
-    
+
     /// <summary>
     /// 每页大小
     /// </summary>
     public int PageSize { get; set; }
-    
+
     /// <summary>
     /// 总记录数
     /// </summary>
     public int TotalCount { get; set; }
-    
+
     /// <summary>
     /// 总页数
     /// </summary>
     public int TotalPages { get; set; }
-    
+
     /// <summary>
     /// 是否有上一页
     /// </summary>
     public bool HasPreviousPage { get; set; }
-    
+
     /// <summary>
     /// 是否有下一页
     /// </summary>
     public bool HasNextPage { get; set; }
-    
+
     /// <summary>
     /// 分页响应静态工厂方法
     /// </summary>
@@ -55,7 +55,7 @@ public class PaginatedResponse<T> : ApiResponse<List<T>>
     {
         // 计算总页数
         int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
-        
+
         return new PaginatedResponse<T>
         {
             StatusCode = statusCode,

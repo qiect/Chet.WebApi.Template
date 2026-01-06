@@ -21,7 +21,7 @@ namespace Chet.WebApi.Template.Shared
         /// 获取或设置实体类型名称
         /// </summary>
         public string EntityName { get; set; }
-        
+
         /// <summary>
         /// 获取或设置未找到的实体ID
         /// </summary>

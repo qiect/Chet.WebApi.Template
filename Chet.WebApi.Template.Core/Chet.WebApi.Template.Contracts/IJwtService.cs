@@ -1,5 +1,5 @@
-using Chet.WebApi.Template.DTOs;
 using Chet.WebApi.Template.Domain;
+using Chet.WebApi.Template.DTOs;
 using System.Security.Claims;
 
 namespace Chet.WebApi.Template.Contracts
@@ -14,21 +14,21 @@ namespace Chet.WebApi.Template.Contracts
         /// </summary>
         /// <param name="user">用户实体</param>
         /// <returns>访问令牌字符串</returns>
-        string GenerateAccessToken(Domain.User user);
-        
+        string GenerateAccessToken(User user);
+
         /// <summary>
         /// 生成刷新令牌
         /// </summary>
         /// <returns>刷新令牌字符串</returns>
         string GenerateRefreshToken();
-        
+
         /// <summary>
         /// 从过期的访问令牌中获取声明主体
         /// </summary>
         /// <param name="token">过期的访问令牌</param>
         /// <returns>声明主体</returns>
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
-        
+
         /// <summary>
         /// 使用刷新令牌获取新的访问令牌
         /// </summary>

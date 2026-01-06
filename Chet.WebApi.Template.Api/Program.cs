@@ -2,23 +2,23 @@
 // Copyright (c) Chet.WebApi.Template. All rights reserved.
 // </copyright>
 
-using Chet.WebApi.Template.Data;
-using Chet.WebApi.Template.Contracts;
-using Chet.WebApi.Template.Services;
 using Chet.WebApi.Template.Caching;
 using Chet.WebApi.Template.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.OpenApi.Models;
+using Chet.WebApi.Template.Contracts;
+using Chet.WebApi.Template.Data;
+using Chet.WebApi.Template.Mapping;
+using Chet.WebApi.Template.Services;
 using Chet.WebApi.Template.Shared;
-using StackExchange.Redis;
 using Microsoft.AspNetCore.Authentication;
-using System.Security.Claims;
-using System.Text.Encodings.Web;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
 
 /// <summary>
 /// 应用程序入口点，配置服务和HTTP请求管道
@@ -37,7 +37,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     // 定义Swagger文档信息
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Chet.WebApi.Template", Version = "v1" });
-    
+
     // 添加Bearer认证方案定义
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -89,7 +89,7 @@ else
 }
 
 // 配置AutoMapper，明确指定映射配置类所在的程序集
-builder.Services.AddAutoMapper(typeof(Chet.WebApi.Template.Mapping.MappingProfile));
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
 // 注册Redis连接服务，根据配置决定是否启用
@@ -189,7 +189,7 @@ app.UseExceptionHandler(options =>
         context.Response.StatusCode = statusCode;
         context.Response.ContentType = "application/json";
 
-        var errorResponse = Chet.WebApi.Template.Shared.ApiResponse.Error(message, statusCode);
+        var errorResponse = ApiResponse.Error(message, statusCode);
 
         // 返回错误响应
         await context.Response.WriteAsJsonAsync(errorResponse);
@@ -229,11 +229,7 @@ public class AllowAllAuthenticationHandler : AuthenticationHandler<Authenticatio
     /// <param name="logger">日志记录器</param>
     /// <param name="encoder">URL编码器</param>
     /// <param name="clock">系统时钟</param>
-    public AllowAllAuthenticationHandler(
-        IOptionsMonitor<AuthenticationSchemeOptions> optionsMonitor,
-        ILoggerFactory logger,
-        UrlEncoder encoder,
-        ISystemClock clock) : base(optionsMonitor, logger, encoder, clock)
+    public AllowAllAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> optionsMonitor, ILoggerFactory logger, UrlEncoder encoder) : base(optionsMonitor, logger, encoder)
     { }
 
     /// <summary>

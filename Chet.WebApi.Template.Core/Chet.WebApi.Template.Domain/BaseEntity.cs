@@ -9,12 +9,12 @@ namespace Chet.WebApi.Template.Domain
         /// 实体唯一标识符
         /// </summary>
         public int Id { get; set; }
-        
+
         /// <summary>
         /// 实体创建时间
         /// </summary>
         public DateTime CreatedAt { get; set; }
-        
+
         /// <summary>
         /// 实体更新时间
         /// </summary>

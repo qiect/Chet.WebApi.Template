@@ -1,5 +1,4 @@
 using Chet.WebApi.Template.Shared;
-using Xunit;
 
 namespace Chet.WebApi.Template.IntegrationTests;
 
@@ -18,10 +17,10 @@ public class ApiResponseIntegrationTests
         var data = new { Id = 1, Name = "Test" };
         var message = "Operation successful";
         var statusCode = 200;
-        
+
         // Act
         var response = ApiResponse.Ok(data, message, statusCode);
-        
+
         // Assert
         Assert.NotNull(response);
         Assert.True(response.Success);
@@ -29,7 +28,7 @@ public class ApiResponseIntegrationTests
         Assert.Equal(message, response.Message);
         Assert.Equal(data, response.Data);
     }
-    
+
     /// <summary>
     /// 测试ApiResponse.Error方法创建错误响应
     /// </summary>
@@ -39,10 +38,10 @@ public class ApiResponseIntegrationTests
         // Arrange
         var message = "Operation failed";
         var statusCode = 500;
-        
+
         // Act
         var response = ApiResponse.Error(message, statusCode);
-        
+
         // Assert
         Assert.NotNull(response);
         Assert.False(response.Success);
@@ -50,7 +49,7 @@ public class ApiResponseIntegrationTests
         Assert.Equal(message, response.Message);
         Assert.Null(response.Data);
     }
-    
+
     /// <summary>
     /// 测试ApiResponse.NoContent方法创建无内容响应
     /// </summary>
@@ -60,10 +59,10 @@ public class ApiResponseIntegrationTests
         // Arrange
         var message = "No content available";
         var statusCode = 204;
-        
+
         // Act
         var response = ApiResponse.NoContent(message, statusCode);
-        
+
         // Assert
         Assert.NotNull(response);
         Assert.True(response.Success);
@@ -71,7 +70,7 @@ public class ApiResponseIntegrationTests
         Assert.Equal(message, response.Message);
         Assert.Null(response.Data);
     }
-    
+
     /// <summary>
     /// 测试ApiResponse&lt;T&gt;.CreateSuccess方法创建泛型成功响应
     /// </summary>
@@ -82,10 +81,10 @@ public class ApiResponseIntegrationTests
         var data = new { Id = 1, Name = "Test" };
         var message = "Operation successful";
         var statusCode = 200;
-        
+
         // Act
         var response = ApiResponse<object>.CreateSuccess(data, message, statusCode);
-        
+
         // Assert
         Assert.NotNull(response);
         Assert.True(response.Success);
@@ -93,7 +92,7 @@ public class ApiResponseIntegrationTests
         Assert.Equal(message, response.Message);
         Assert.Equal(data, response.Data);
     }
-    
+
     /// <summary>
     /// 测试PaginatedResponse.Ok方法创建成功的分页响应
     /// </summary>
@@ -107,10 +106,10 @@ public class ApiResponseIntegrationTests
         var pageSize = 3;
         var message = "Items retrieved successfully";
         var statusCode = 200;
-        
+
         // Act
         var response = PaginatedResponse<string>.Ok(items, totalCount, pageNumber, pageSize, message, statusCode);
-        
+
         // Assert
         Assert.NotNull(response);
         Assert.True(response.Success);

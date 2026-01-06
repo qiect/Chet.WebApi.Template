@@ -1,5 +1,4 @@
 using Chet.WebApi.Template.Shared;
-using Xunit;
 
 namespace Chet.WebApi.Template.UnitTests;
 
@@ -21,10 +20,10 @@ public class PaginatedResponseTests
         var pageSize = 3;
         var message = "Items retrieved successfully";
         var statusCode = 200;
-        
+
         // Act
         var response = PaginatedResponse<string>.Ok(items, totalCount, pageNumber, pageSize, message, statusCode);
-        
+
         // Assert
         Assert.NotNull(response);
         Assert.True(response.Success);
@@ -38,7 +37,7 @@ public class PaginatedResponseTests
         Assert.False(response.HasPreviousPage); // First page, no previous
         Assert.True(response.HasNextPage); // First page, has next
     }
-    
+
     /// <summary>
     /// 测试PaginatedResponse.Ok方法在最后一页时的行为
     /// </summary>
@@ -50,15 +49,15 @@ public class PaginatedResponseTests
         var totalCount = 10;
         var pageNumber = 4;
         var pageSize = 3;
-        
+
         // Act
         var response = PaginatedResponse<string>.Ok(items, totalCount, pageNumber, pageSize);
-        
+
         // Assert
         Assert.True(response.HasPreviousPage); // Last page, has previous
         Assert.False(response.HasNextPage); // Last page, no next
     }
-    
+
     /// <summary>
     /// 测试PaginatedResponse.Ok方法在单页时的行为
     /// </summary>
@@ -70,16 +69,16 @@ public class PaginatedResponseTests
         var totalCount = 2;
         var pageNumber = 1;
         var pageSize = 3;
-        
+
         // Act
         var response = PaginatedResponse<string>.Ok(items, totalCount, pageNumber, pageSize);
-        
+
         // Assert
         Assert.False(response.HasPreviousPage); // Single page, no previous
         Assert.False(response.HasNextPage); // Single page, no next
         Assert.Equal(1, response.TotalPages); // Only 1 page
     }
-    
+
     /// <summary>
     /// 测试PaginatedResponse.Ok方法在空数据时的行为
     /// </summary>
@@ -91,10 +90,10 @@ public class PaginatedResponseTests
         var totalCount = 0;
         var pageNumber = 1;
         var pageSize = 3;
-        
+
         // Act
         var response = PaginatedResponse<string>.Ok(items, totalCount, pageNumber, pageSize);
-        
+
         // Assert
         Assert.NotNull(response);
         Assert.NotNull(response.Data);

@@ -13,13 +13,13 @@ namespace Chet.WebApi.Template.Contracts
         /// <param name="loginDto">登录DTO，包含邮箱和密码</param>
         /// <returns>JWT令牌DTO，包含访问令牌和刷新令牌</returns>
         Task<JwtTokenDto> LoginAsync(LoginDto loginDto);
-        
+
         /// <summary>
         /// 用户注册
         /// </summary>
         /// <param name="registerDto">注册DTO，包含用户名、邮箱和密码</param>
         Task RegisterAsync(RegisterDto registerDto);
-        
+
         /// <summary>
         /// 刷新访问令牌
         /// </summary>

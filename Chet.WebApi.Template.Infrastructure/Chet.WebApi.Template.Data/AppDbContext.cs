@@ -28,7 +28,7 @@ namespace Chet.WebApi.Template.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
             // 配置用户实体
             modelBuilder.Entity<User>(entity =>
             {

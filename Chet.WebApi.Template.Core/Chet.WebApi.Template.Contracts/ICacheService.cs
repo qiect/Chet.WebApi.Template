@@ -12,7 +12,7 @@ namespace Chet.WebApi.Template.Contracts
         /// <param name="key">缓存键</param>
         /// <returns>缓存值，如果不存在则返回默认值</returns>
         Task<T> GetAsync<T>(string key);
-        
+
         /// <summary>
         /// 设置缓存值
         /// </summary>
@@ -21,20 +21,20 @@ namespace Chet.WebApi.Template.Contracts
         /// <param name="value">缓存值</param>
         /// <param name="expiry">过期时间，默认无过期时间</param>
         Task SetAsync<T>(string key, T value, TimeSpan? expiry = null);
-        
+
         /// <summary>
         /// 根据键删除缓存
         /// </summary>
         /// <param name="key">缓存键</param>
         Task RemoveAsync(string key);
-        
+
         /// <summary>
         /// 检查缓存是否存在
         /// </summary>
         /// <param name="key">缓存键</param>
         /// <returns>如果缓存存在则返回 true，否则返回 false</returns>
         Task<bool> ExistsAsync(string key);
-        
+
         /// <summary>
         /// 获取缓存值，如果不存在则使用工厂方法创建并设置缓存
         /// </summary>
