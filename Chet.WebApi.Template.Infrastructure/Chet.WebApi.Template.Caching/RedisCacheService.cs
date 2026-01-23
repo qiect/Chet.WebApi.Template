@@ -34,7 +34,7 @@ namespace Chet.WebApi.Template.Caching
                 {
                     return default;
                 }
-                return JsonSerializer.Deserialize<T>(value);
+                return JsonSerializer.Deserialize<T>(value.ToString());
             }
             catch (Exception ex)
             {
