@@ -4,7 +4,7 @@
 
 ## 技术栈
 
-- **框架**: .NET 8
+- **框架**: .NET 10
 - **ORM**: Entity Framework Core
 - **数据库**: SQLite (本地开发)
 - **身份认证**: JWT
