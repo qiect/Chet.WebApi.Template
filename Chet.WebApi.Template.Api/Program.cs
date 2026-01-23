@@ -22,6 +22,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 
+
+
 Log.Information("Starting application...");
 Log.Information("Creating WebApplicationBuilder...");
 var builder = WebApplication.CreateBuilder(args);
@@ -44,7 +46,11 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
 {
     // 定义Swagger文档信息
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Chet.WebApi.Template", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { 
+        Title = "Chet.WebApi.Template", 
+        Version = "v1",
+        Description = "基于.NET 10的WebAPI模板框架，提供用户认证和管理功能"
+    });
 
     // 添加Bearer认证方案定义
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -71,6 +77,17 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+
+    // 包含XML注释文件
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        c.IncludeXmlComments(xmlPath);
+    }
+
+    // 启用Swagger注释
+    c.EnableAnnotations();
 });
 
 #endregion

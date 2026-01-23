@@ -2,6 +2,7 @@ using Chet.WebApi.Template.Contracts;
 using Chet.WebApi.Template.DTOs;
 using Chet.WebApi.Template.Shared;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Chet.WebApi.Template.Api.Controllers;
 
@@ -10,6 +11,7 @@ namespace Chet.WebApi.Template.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
+[SwaggerTag("提供用户认证相关的API接口，包括注册、登录和令牌刷新")]
 public class AuthController : ControllerBase
 {
     /// <summary>
@@ -36,8 +38,20 @@ public class AuthController : ControllerBase
     /// <summary>
     /// 用户注册接口
     /// </summary>
-    /// <param name="registerDto">注册信息DTO</param>
-    /// <returns>注册结果</returns>
+    /// <param name="registerDto">注册信息DTO，包含用户邮箱、密码和名称</param>
+    /// <returns>注册成功返回201状态码，失败返回400状态码</returns>
+    /// <remarks>
+    /// 示例请求：
+    /// 
+    ///     POST /api/Auth/register
+    ///     {
+    ///         "email": "user@example.com",
+    ///         "password": "SecurePassword123!",
+    ///         "name": "John Doe"
+    ///     }
+    /// </remarks>
+    /// <response code="201">注册成功</response>
+    /// <response code="400">注册失败，邮箱已存在或输入无效</response>
     [HttpPost("register")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -51,8 +65,19 @@ public class AuthController : ControllerBase
     /// <summary>
     /// 用户登录接口
     /// </summary>
-    /// <param name="loginDto">登录信息DTO</param>
-    /// <returns>JWT令牌</returns>
+    /// <param name="loginDto">登录信息DTO，包含用户邮箱和密码</param>
+    /// <returns>登录成功返回JWT令牌，失败返回401状态码</returns>
+    /// <remarks>
+    /// 示例请求：
+    /// 
+    ///     POST /api/Auth/login
+    ///     {
+    ///         "email": "user@example.com",
+    ///         "password": "SecurePassword123!"
+    ///     }
+    /// </remarks>
+    /// <response code="200">登录成功，返回JWT令牌</response>
+    /// <response code="401">登录失败，邮箱或密码错误</response>
     [HttpPost("login")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
@@ -66,11 +91,22 @@ public class AuthController : ControllerBase
     /// <summary>
     /// 刷新令牌接口
     /// </summary>
-    /// <param name="refreshTokenDto">刷新令牌信息DTO</param>
-    /// <returns>新的JWT令牌</returns>
+    /// <param name="refreshTokenDto">刷新令牌信息DTO，包含访问令牌和刷新令牌</param>
+    /// <returns>刷新成功返回新的JWT令牌，失败返回401状态码</returns>
+    /// <remarks>
+    /// 示例请求：
+    /// 
+    ///     POST /api/Auth/refresh-token
+    ///     {
+    ///         "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    ///         "refreshToken": "dGVzdHJlZnNlcnZpY2U="
+    ///     }
+    /// </remarks>
+    /// <response code="200">令牌刷新成功，返回新的JWT令牌</response>
+    /// <response code="401">令牌刷新失败，刷新令牌无效或已过期</response>
     [HttpPost("refresh-token")]
-    [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(object), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> RefreshToken(RefreshTokenDto refreshTokenDto)
     {
         _logger.LogInformation("Token refresh attempt");
