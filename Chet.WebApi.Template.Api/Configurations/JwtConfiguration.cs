@@ -1,0 +1,105 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
+using Chet.WebApi.Template.Configuration;
+
+namespace Chet.WebApi.Template.Api.Configurations;
+
+/// <summary>
+/// JWT认证配置类
+/// </summary>
+public static class JwtConfiguration
+{
+    /// <summary>
+    /// 配置JWT认证
+    /// </summary>
+    /// <param name="services">IServiceCollection实例</param>
+    /// <param name="appSettings">应用程序配置实例</param>
+    public static void ConfigureJwt(this IServiceCollection services, AppSettings appSettings)
+    {
+        if (appSettings?.Jwt != null && appSettings.Jwt.Enabled)
+        {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = appSettings.Jwt.Issuer,
+                        ValidAudience = appSettings.Jwt.Audience,
+                        // 使用配置中的SecretKey，确保与生成令牌时使用相同的密钥
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.Jwt.SecretKey ?? "DefaultJwtSecretKey"))
+                    };
+                });
+        }
+        else
+        {
+            // 当JWT禁用时，注册一个允许所有请求的认证方案
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "AllowAll";
+            })
+            .AddScheme<AuthenticationSchemeOptions, AllowAllAuthenticationHandler>("AllowAll", null);
+        }
+    }
+
+    /// <summary>
+    /// 配置认证和授权中间件
+    /// </summary>
+    /// <param name="app">WebApplication实例</param>
+    /// <param name="appSettings">应用程序配置实例</param>
+    public static void ConfigureAuthMiddleware(this WebApplication app, AppSettings appSettings)
+    {
+        if (appSettings?.Jwt != null && appSettings.Jwt.Enabled)
+        {
+            // 添加身份认证中间件
+            app.UseAuthentication();
+            // 添加授权中间件
+            app.UseAuthorization();
+        }
+    }
+}
+
+/// <summary>
+/// 允许所有请求的认证处理程序，当JWT禁用时使用
+/// </summary>
+public class AllowAllAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="optionsMonitor">选项监视器</param>
+    /// <param name="logger">日志记录器</param>
+    /// <param name="encoder">URL编码器</param>
+    public AllowAllAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> optionsMonitor, ILoggerFactory logger, UrlEncoder encoder) : base(optionsMonitor, logger, encoder)
+    { }
+
+    /// <summary>
+    /// 处理认证请求，允许所有请求通过
+    /// </summary>
+    /// <returns>认证结果</returns>
+    protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+    {
+        // 创建一个包含默认声明的身份
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, "Anonymous"),
+            new Claim(ClaimTypes.Role, "Guest")
+        };
+
+        // 创建身份和认证票据
+        var identity = new ClaimsIdentity(claims, Scheme.Name);
+        var principal = new ClaimsPrincipal(identity);
+        var ticket = new AuthenticationTicket(principal, Scheme.Name);
+
+        // 返回成功的认证结果
+        return Task.FromResult(AuthenticateResult.Success(ticket));
+    }
+}

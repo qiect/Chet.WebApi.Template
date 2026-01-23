@@ -30,4 +30,8 @@
     <ProjectReference Include="..\Chet.WebApi.Template.Core\Chet.WebApi.Template.Shared\Chet.WebApi.Template.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+  </ItemGroup>
+
 </Project>
