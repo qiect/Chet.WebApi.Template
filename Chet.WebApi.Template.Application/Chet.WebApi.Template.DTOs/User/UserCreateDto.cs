@@ -21,4 +21,11 @@ public class UserCreateDto
     [EmailAddress(ErrorMessage = "请输入有效的邮箱地址")]
     [MaxLength(255, ErrorMessage = "邮箱长度不能超过255个字符")]
     public required string Email { get; set; }
+
+    /// <summary>
+    /// 用户密码，用于登录认证
+    /// </summary>
+    [Required(ErrorMessage = "密码不能为空")]
+    [MinLength(6, ErrorMessage = "密码长度不能少于6个字符")]
+    public required string Password { get; set; }
 }

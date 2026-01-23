@@ -81,6 +81,8 @@ public class UserService : IUserService
 
         // 将DTO映射为实体
         var user = _mapper.Map<User>(userCreateDto);
+        // 对密码进行哈希处理
+        user.PasswordHash = HashPassword(userCreateDto.Password);
         // 添加到数据库
         await _userRepository.AddAsync(user);
 
@@ -89,6 +91,29 @@ public class UserService : IUserService
 
         // 返回创建的用户DTO
         return _mapper.Map<UserDto>(user);
+    }
+
+    /// <summary>
+    /// 对密码进行哈希处理
+    /// </summary>
+    /// <param name="password">原始密码</param>
+    /// <returns>哈希后的密码</returns>
+    private string HashPassword(string password)
+    {
+        // 使用BCrypt对密码进行哈希处理
+        return BCrypt.Net.BCrypt.HashPassword(password);
+    }
+
+    /// <summary>
+    /// 验证密码是否正确
+    /// </summary>
+    /// <param name="password">原始密码</param>
+    /// <param name="passwordHash">哈希后的密码</param>
+    /// <returns>如果密码正确则返回true，否则返回false</returns>
+    private bool Verify(string password, string passwordHash)
+    {
+        // 使用BCrypt验证密码
+        return BCrypt.Net.BCrypt.Verify(password, passwordHash);
     }
 
     /// <inheritdoc />
