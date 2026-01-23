@@ -15,8 +15,7 @@ namespace Chet.WebApi.Template.Logging
         /// <param name="configuration">Serilog日志配置对象</param>
         public static void ConfigureSerilog(this HostBuilderContext context, LoggerConfiguration configuration)
         {
-            configuration
-                .ReadFrom.Configuration(context.Configuration);
+            configuration.ReadFrom.Configuration(context.Configuration);
         }
     }
 }

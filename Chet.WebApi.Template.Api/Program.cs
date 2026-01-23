@@ -6,6 +6,7 @@ using Chet.WebApi.Template.Caching;
 using Chet.WebApi.Template.Configuration;
 using Chet.WebApi.Template.Contracts;
 using Chet.WebApi.Template.Data;
+using Chet.WebApi.Template.Logging;
 using Chet.WebApi.Template.Mapping;
 using Chet.WebApi.Template.Services;
 using Chet.WebApi.Template.Shared;
@@ -15,15 +16,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using StackExchange.Redis;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 
-/// <summary>
-/// 应用程序入口点，配置服务和HTTP请求管道
-/// </summary>
+Log.Information("Starting application...");
+Log.Information("Creating WebApplicationBuilder...");
 var builder = WebApplication.CreateBuilder(args);
+Log.Information("WebApplicationBuilder created successfully.");
+
+// 配置Serilog，直接从配置文件中读取配置
+builder.Host.UseSerilog((context, configuration) =>
+    context.ConfigureSerilog(configuration)
+);
 
 // 加载应用程序配置
 var appSettings = builder.Configuration.GetSection("AppSettings").Get<AppSettings>();
@@ -32,6 +39,7 @@ builder.Services.AddSingleton(appSettings!);
 // 添加控制器服务
 builder.Services.AddControllers();
 
+#region Swagger
 // 配置Swagger/OpenAPI
 builder.Services.AddSwaggerGen(c =>
 {
@@ -65,19 +73,28 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+#endregion
+
+#region 数据库配置
 // 添加数据库上下文服务
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+#endregion
 
+#region 注册仓储服务
 // 注册仓储服务
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfCoreRepository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+#endregion
 
+#region 注册业务逻辑服务
 // 注册业务逻辑服务
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+#endregion
 
+#region Redis缓存
 // 根据Redis配置决定使用哪个缓存服务
 if (appSettings?.Redis != null && appSettings.Redis.Enabled)
 {
@@ -88,10 +105,6 @@ else
     builder.Services.AddScoped<ICacheService, NoOpCacheService>();
 }
 
-// 配置AutoMapper，明确指定映射配置类所在的程序集
-builder.Services.AddAutoMapper(typeof(MappingProfile));
-
-
 // 注册Redis连接服务，根据配置决定是否启用
 if (appSettings?.Redis != null && appSettings.Redis.Enabled)
 {
@@ -100,7 +113,14 @@ if (appSettings?.Redis != null && appSettings.Redis.Enabled)
     configurationOptions.AbortOnConnectFail = false;
     builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(configurationOptions));
 }
+#endregion
 
+#region AutoMapper
+// 配置AutoMapper，明确指定映射配置类所在的程序集
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+#endregion
+
+#region JWT身份认证
 // 配置JWT身份认证或使用允许所有请求的认证方案
 if (appSettings?.Jwt != null && appSettings.Jwt.Enabled)
 {
@@ -129,16 +149,21 @@ else
     })
     .AddScheme<AuthenticationSchemeOptions, AllowAllAuthenticationHandler>("AllowAll", null);
 }
+#endregion
 
+Log.Information("Building web application...");
 // 构建Web应用程序
 var app = builder.Build();
+Log.Information("Web application built successfully.");
 
+Log.Information("Creating database if not exists...");
 // 自动创建数据库
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     dbContext.Database.EnsureCreated();
 }
+Log.Information("Database creation completed.");
 
 // 配置HTTP请求管道
 if (app.Environment.IsDevelopment())
@@ -148,6 +173,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+Log.Information("Adding exception handling middleware...");
 // 添加自定义异常处理中间件
 app.UseExceptionHandler(options =>
 {
@@ -195,10 +221,12 @@ app.UseExceptionHandler(options =>
         await context.Response.WriteAsJsonAsync(errorResponse);
     });
 });
+Log.Information("Exception handling middleware added.");
 
 // 启用HTTPS重定向
 app.UseHttpsRedirection();
 
+Log.Information("Configuring authentication and authorization...");
 // 根据JWT配置决定是否启用身份认证和授权中间件
 if (appSettings?.Jwt != null && appSettings.Jwt.Enabled)
 {
@@ -206,6 +234,12 @@ if (appSettings?.Jwt != null && appSettings.Jwt.Enabled)
     app.UseAuthentication();
     // 添加授权中间件
     app.UseAuthorization();
+    Log.Information("Authentication and authorization enabled.");
+
+}
+else
+{
+    Log.Information("Using default authentication scheme.");
 }
 
 // 映射控制器路由
@@ -214,8 +248,11 @@ app.MapControllers();
 // 根路径重定向到Swagger UI
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
+Log.Information("Starting web application...");
+
 // 启动应用程序
 app.Run();
+
 
 /// <summary>
 /// 允许所有请求的认证处理程序，当JWT禁用时使用
@@ -228,7 +265,6 @@ public class AllowAllAuthenticationHandler : AuthenticationHandler<Authenticatio
     /// <param name="optionsMonitor">选项监视器</param>
     /// <param name="logger">日志记录器</param>
     /// <param name="encoder">URL编码器</param>
-    /// <param name="clock">系统时钟</param>
     public AllowAllAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> optionsMonitor, ILoggerFactory logger, UrlEncoder encoder) : base(optionsMonitor, logger, encoder)
     { }
 
