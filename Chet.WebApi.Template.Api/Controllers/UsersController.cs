@@ -116,7 +116,8 @@ public class UsersController : ControllerBase
     ///     POST /api/Users
     ///     {
     ///         "email": "newuser@example.com",
-    ///         "name": "New User"
+    ///         "name": "New User",
+    ///         "password": "123456"
     ///     }
     /// </remarks>
     /// <response code="201">创建成功，返回创建的用户信息</response>
