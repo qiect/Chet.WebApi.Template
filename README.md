@@ -52,7 +52,7 @@
 
 1. **克隆仓库**
    ```bash
-   git clone https://github.com/your-repo/Chet.WebApi.Template.git
+   git clone https://github.com/qiect/Chet.WebApi.Template.git
    cd Chet.WebApi.Template
    ```
 
@@ -241,7 +241,7 @@ dotnet test --project Chet.WebApi.Template.Tests/Chet.WebApi.Template.Integratio
 
 ## API文档
 
-应用启动后，访问 http://localhost:5021/swagger 查看API文档。
+应用启动后，访问 http://localhost:5000/swagger 查看API文档。
 
 ## 许可证
 
@@ -253,8 +253,8 @@ MIT License
 
 ## 联系方式
 
-- 项目主页: https://github.com/your-repo/Chet.WebApi.Template
-- 问题反馈: https://github.com/your-repo/Chet.WebApi.Template/issues
+- 项目主页: https://github.com/qiect/Chet.WebApi.Template
+- 问题反馈: https://github.com/qiect/Chet.WebApi.Template/issues
 
 ## 更新日志
 
