@@ -1,6 +1,6 @@
 # Chet.WebApi.Template
 
-一个基于.NET 8的现代化Web API模板框架，支持单体服务和微服务架构，提供完整的身份认证、缓存、日志等功能。
+一个基于.NET 10的现代化Web API模板框架，支持单体服务和微服务架构，提供完整的身份认证、缓存、日志等功能。
 
 ## 技术栈
 
@@ -44,7 +44,7 @@
 
 ### 前置条件
 
-- .NET 8 SDK
+- .NET 10 SDK
 - SQLite (自动嵌入，无需额外安装)
 - Redis (可选，应用会在Redis不可用时自动降级)
 
@@ -199,7 +199,7 @@ dotnet publish -c Release -o ./publish
 2. **部署到IIS**
    - 创建新网站
    - 设置物理路径为publish目录
-   - 配置应用池为.NET 8
+   - 配置应用池为.NET 10
 
 ## 开发指南
 
