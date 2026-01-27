@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit" Version="2.9.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
   </ItemGroup>
@@ -19,7 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Chet.WebApi.Template.Application\Chet.WebApi.Template.DTOs\Chet.WebApi.Template.DTOs.csproj" />
+    <ProjectReference Include="..\..\Chet.WebApi.Template.Application\Chet.WebApi.Template.Mapping\Chet.WebApi.Template.Mapping.csproj" />
+    <ProjectReference Include="..\..\Chet.WebApi.Template.Application\Chet.WebApi.Template.Services\Chet.WebApi.Template.Services.csproj" />
+    <ProjectReference Include="..\..\Chet.WebApi.Template.Core\Chet.WebApi.Template.Contracts\Chet.WebApi.Template.Contracts.csproj" />
+    <ProjectReference Include="..\..\Chet.WebApi.Template.Core\Chet.WebApi.Template.Domain\Chet.WebApi.Template.Domain.csproj" />
     <ProjectReference Include="..\..\Chet.WebApi.Template.Core\Chet.WebApi.Template.Shared\Chet.WebApi.Template.Shared.csproj" />
+    <ProjectReference Include="..\..\Chet.WebApi.Template.Infrastructure\Chet.WebApi.Template.Caching\Chet.WebApi.Template.Caching.csproj" />
   </ItemGroup>
 
 </Project>
