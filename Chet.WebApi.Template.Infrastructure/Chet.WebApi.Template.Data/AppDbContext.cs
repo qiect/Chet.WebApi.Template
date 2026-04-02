@@ -1,4 +1,5 @@
 using Chet.WebApi.Template.Domain;
+using Chet.WebApi.Template.Domain.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chet.WebApi.Template.Data

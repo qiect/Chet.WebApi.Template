@@ -1,5 +1,5 @@
 using Chet.WebApi.Template.Contracts.User;
-using Chet.WebApi.Template.DTOs;
+using Chet.WebApi.Template.DTOs.User;
 using Chet.WebApi.Template.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

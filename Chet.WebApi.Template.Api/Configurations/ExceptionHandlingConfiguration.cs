@@ -1,6 +1,6 @@
+using Chet.WebApi.Template.Shared;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
-using Chet.WebApi.Template.Shared;
 
 namespace Chet.WebApi.Template.Api.Configurations;
 

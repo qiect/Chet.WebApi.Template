@@ -1,4 +1,4 @@
-using Chet.WebApi.Template.Domain;
+using Chet.WebApi.Template.Domain.User;
 
 namespace Chet.WebApi.Template.Contracts.User
 {

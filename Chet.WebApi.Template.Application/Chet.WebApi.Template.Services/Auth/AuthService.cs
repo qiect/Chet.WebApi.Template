@@ -3,13 +3,14 @@ using Chet.WebApi.Template.Configuration;
 using Chet.WebApi.Template.Contracts.Auth;
 using Chet.WebApi.Template.Contracts.Jwt;
 using Chet.WebApi.Template.Contracts.User;
-using Chet.WebApi.Template.Domain;
-using Chet.WebApi.Template.DTOs;
+using Chet.WebApi.Template.Domain.User;
+using Chet.WebApi.Template.DTOs.Auth;
+using Chet.WebApi.Template.DTOs.User;
 using Chet.WebApi.Template.Shared;
 using Microsoft.Extensions.Logging;
 using static BCrypt.Net.BCrypt;
 
-namespace Chet.WebApi.Template.Services;
+namespace Chet.WebApi.Template.Services.Auth;
 
 /// <summary>
 /// 认证服务实现类，实现了 IAuthService 接口

@@ -1,16 +1,15 @@
-using AutoMapper;
 using Chet.WebApi.Template.Contracts.Cache;
 using Chet.WebApi.Template.Contracts.User;
 using Chet.WebApi.Template.Data;
-using Chet.WebApi.Template.Domain;
-using Chet.WebApi.Template.DTOs;
-using Chet.WebApi.Template.Mapping;
-using Chet.WebApi.Template.Services;
+using Chet.WebApi.Template.Data.User;
+using Chet.WebApi.Template.Domain.User;
+using Chet.WebApi.Template.DTOs.User;
+using Chet.WebApi.Template.Mapping.User;
+using Chet.WebApi.Template.Services.User;
 using Chet.WebApi.Template.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Xunit;
 
 namespace Chet.WebApi.Template.IntegrationTests
 {
@@ -41,7 +40,7 @@ namespace Chet.WebApi.Template.IntegrationTests
             // 注册其他服务
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
-            
+
             // 注册AutoMapper，自动映射配置
             services.AddAutoMapper(typeof(MappingProfile));
 
@@ -73,7 +72,7 @@ namespace Chet.WebApi.Template.IntegrationTests
                 Email = "test@example.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password")
             };
-            
+
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
@@ -110,7 +109,7 @@ namespace Chet.WebApi.Template.IntegrationTests
                 new UserEnitity { Name = "User 1", Email = "user1@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") },
                 new UserEnitity { Name = "User 2", Email = "user2@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") }
             };
-            
+
             await _dbContext.Users.AddRangeAsync(users);
             await _dbContext.SaveChangesAsync();
 
@@ -148,7 +147,7 @@ namespace Chet.WebApi.Template.IntegrationTests
             Assert.Equal(userCreateDto.Name, result.Name);
             // 3. 验证返回的用户对象包含正确的邮箱
             Assert.Equal(userCreateDto.Email, result.Email);
-            
+
             // 验证用户已保存到数据库 - 从数据库中检索刚创建的用户
             var savedUser = await _userRepository.GetByIdAsync(result.Id);
             // 验证数据库中的用户存在且数据正确
@@ -172,7 +171,7 @@ namespace Chet.WebApi.Template.IntegrationTests
                 Email = "original@example.com",      // 初始邮箱
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") // 初始密码哈希
             };
-            
+
             // 将用户添加到数据库上下文中并保存
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
@@ -233,7 +232,7 @@ namespace Chet.WebApi.Template.IntegrationTests
                 Email = "delete@example.com",              // 待删除的邮箱
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") // 密码哈希
             };
-            
+
             // 将用户添加到数据库上下文中并保存
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
@@ -271,7 +270,7 @@ namespace Chet.WebApi.Template.IntegrationTests
             _serviceProvider?.Dispose();
         }
     }
-    
+
     /// <summary>
     /// 为测试创建的空操作缓存服务实现
     /// 此实现不执行任何实际缓存操作，仅用于测试目的

@@ -1,13 +1,12 @@
 using AutoMapper;
 using Chet.WebApi.Template.Contracts.Cache;
 using Chet.WebApi.Template.Contracts.User;
-using Chet.WebApi.Template.Domain;
-using Chet.WebApi.Template.DTOs;
-using Chet.WebApi.Template.Services;
+using Chet.WebApi.Template.Domain.User;
+using Chet.WebApi.Template.DTOs.User;
+using Chet.WebApi.Template.Services.User;
 using Chet.WebApi.Template.Shared;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Xunit;
 
 namespace Chet.WebApi.Template.UnitTests
 {

@@ -1,12 +1,12 @@
 using AutoMapper;
 using Chet.WebApi.Template.Contracts.Cache;
 using Chet.WebApi.Template.Contracts.User;
-using Chet.WebApi.Template.Domain;
-using Chet.WebApi.Template.DTOs;
+using Chet.WebApi.Template.Domain.User;
+using Chet.WebApi.Template.DTOs.User;
 using Chet.WebApi.Template.Shared;
 using Microsoft.Extensions.Logging;
 
-namespace Chet.WebApi.Template.Services;
+namespace Chet.WebApi.Template.Services.User;
 
 /// <summary>
 /// 用户服务实现类，实现了 IUserService 接口

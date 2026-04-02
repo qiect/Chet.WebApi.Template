@@ -1,4 +1,5 @@
-using Chet.WebApi.Template.DTOs;
+using Chet.WebApi.Template.DTOs.Auth;
+using Chet.WebApi.Template.DTOs.User;
 
 namespace Chet.WebApi.Template.Contracts.Auth
 {

@@ -1,6 +1,7 @@
 using Chet.WebApi.Template.Contracts;
 using Chet.WebApi.Template.Contracts.User;
 using Chet.WebApi.Template.Data;
+using Chet.WebApi.Template.Data.User;
 
 namespace Chet.WebApi.Template.Api.Configurations;
 

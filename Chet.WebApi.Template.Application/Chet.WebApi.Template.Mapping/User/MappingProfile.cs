@@ -1,8 +1,8 @@
 using AutoMapper;
-using Chet.WebApi.Template.Domain;
-using Chet.WebApi.Template.DTOs;
+using Chet.WebApi.Template.Domain.User;
+using Chet.WebApi.Template.DTOs.User;
 
-namespace Chet.WebApi.Template.Mapping;
+namespace Chet.WebApi.Template.Mapping.User;
 
 /// <summary>
 /// AutoMapper配置类，用于定义实体和DTO之间的映射关系

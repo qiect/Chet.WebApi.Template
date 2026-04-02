@@ -1,3 +1,4 @@
+using Chet.WebApi.Template.Configuration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
@@ -5,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
-using Chet.WebApi.Template.Configuration;
 
 namespace Chet.WebApi.Template.Api.Configurations;
 

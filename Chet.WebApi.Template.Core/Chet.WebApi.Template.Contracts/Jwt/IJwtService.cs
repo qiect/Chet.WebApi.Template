@@ -1,5 +1,5 @@
-using Chet.WebApi.Template.Domain;
-using Chet.WebApi.Template.DTOs;
+using Chet.WebApi.Template.Domain.User;
+using Chet.WebApi.Template.DTOs.Auth;
 using System.Security.Claims;
 
 namespace Chet.WebApi.Template.Contracts.Jwt

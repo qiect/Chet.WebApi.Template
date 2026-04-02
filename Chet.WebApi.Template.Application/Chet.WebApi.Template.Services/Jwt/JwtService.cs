@@ -1,8 +1,8 @@
 using Chet.WebApi.Template.Configuration;
 using Chet.WebApi.Template.Contracts.Jwt;
 using Chet.WebApi.Template.Contracts.User;
-using Chet.WebApi.Template.Domain;
-using Chet.WebApi.Template.DTOs;
+using Chet.WebApi.Template.Domain.User;
+using Chet.WebApi.Template.DTOs.Auth;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Chet.WebApi.Template.Services;
+namespace Chet.WebApi.Template.Services.Jwt;
 
 /// <summary>
 /// JWT 服务实现类，实现了 IJwtService 接口
