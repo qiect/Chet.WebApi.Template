@@ -1,5 +1,6 @@
 using Chet.WebApi.Template.Configuration;
-using Chet.WebApi.Template.Contracts;
+using Chet.WebApi.Template.Contracts.Jwt;
+using Chet.WebApi.Template.Contracts.User;
 using Chet.WebApi.Template.Domain;
 using Chet.WebApi.Template.DTOs;
 using Microsoft.Extensions.Logging;
@@ -34,7 +35,7 @@ public class JwtService : IJwtService
     }
 
     /// <inheritdoc />
-    public string GenerateAccessToken(User user)
+    public string GenerateAccessToken(UserEnitity user)
     {
         _logger.LogInformation("Generating access token for user: {Email}", user.Email);
 

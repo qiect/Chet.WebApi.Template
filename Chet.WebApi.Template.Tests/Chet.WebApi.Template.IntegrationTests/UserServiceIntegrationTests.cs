@@ -1,5 +1,6 @@
 using AutoMapper;
-using Chet.WebApi.Template.Contracts;
+using Chet.WebApi.Template.Contracts.Cache;
+using Chet.WebApi.Template.Contracts.User;
 using Chet.WebApi.Template.Data;
 using Chet.WebApi.Template.Domain;
 using Chet.WebApi.Template.DTOs;
@@ -66,7 +67,7 @@ namespace Chet.WebApi.Template.IntegrationTests
         public async Task GetUserByIdAsync_WithExistingUser_ReturnsUser()
         {
             // Arrange - 准备测试数据：创建并保存一个用户到内存数据库
-            var user = new User
+            var user = new UserEnitity
             {
                 Name = "Test User",
                 Email = "test@example.com",
@@ -104,10 +105,10 @@ namespace Chet.WebApi.Template.IntegrationTests
         public async Task GetAllUsersAsync_ReturnsAllUsers()
         {
             // Arrange - 准备测试数据：创建并保存多个用户到内存数据库
-            var users = new List<User>
+            var users = new List<UserEnitity>
             {
-                new User { Name = "User 1", Email = "user1@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") },
-                new User { Name = "User 2", Email = "user2@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") }
+                new UserEnitity { Name = "User 1", Email = "user1@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") },
+                new UserEnitity { Name = "User 2", Email = "user2@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") }
             };
             
             await _dbContext.Users.AddRangeAsync(users);
@@ -165,7 +166,7 @@ namespace Chet.WebApi.Template.IntegrationTests
         public async Task UpdateUserAsync_WithValidData_UpdatesUser()
         {
             // Arrange - 准备测试数据：创建并保存一个初始用户到数据库
-            var user = new User
+            var user = new UserEnitity
             {
                 Name = "Original Name",              // 初始用户名
                 Email = "original@example.com",      // 初始邮箱
@@ -226,7 +227,7 @@ namespace Chet.WebApi.Template.IntegrationTests
         public async Task DeleteUserAsync_WithExistingUser_DeletesUser()
         {
             // Arrange - 准备测试数据：创建并保存一个待删除的用户到数据库
-            var user = new User
+            var user = new UserEnitity
             {
                 Name = "User to Delete",                   // 待删除的用户名
                 Email = "delete@example.com",              // 待删除的邮箱

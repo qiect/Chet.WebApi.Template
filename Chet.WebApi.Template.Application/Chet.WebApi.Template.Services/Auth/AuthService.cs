@@ -1,6 +1,8 @@
 using AutoMapper;
 using Chet.WebApi.Template.Configuration;
-using Chet.WebApi.Template.Contracts;
+using Chet.WebApi.Template.Contracts.Auth;
+using Chet.WebApi.Template.Contracts.Jwt;
+using Chet.WebApi.Template.Contracts.User;
 using Chet.WebApi.Template.Domain;
 using Chet.WebApi.Template.DTOs;
 using Chet.WebApi.Template.Shared;
@@ -89,7 +91,7 @@ public class AuthService : IAuthService
         }
 
         // 将注册DTO映射为用户实体
-        var user = _mapper.Map<User>(registerDto);
+        var user = _mapper.Map<UserEnitity>(registerDto);
         // 对密码进行哈希处理
         user.PasswordHash = HashPassword(registerDto.Password);
 

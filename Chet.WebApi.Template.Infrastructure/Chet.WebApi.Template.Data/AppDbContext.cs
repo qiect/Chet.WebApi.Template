@@ -19,7 +19,7 @@ namespace Chet.WebApi.Template.Data
         /// <summary>
         /// 表示数据库中的 Users 表
         /// </summary>
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserEnitity> Users { get; set; }
 
         /// <summary>
         /// 配置实体映射和关系
@@ -30,7 +30,7 @@ namespace Chet.WebApi.Template.Data
             base.OnModelCreating(modelBuilder);
 
             // 配置用户实体
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<UserEnitity>(entity =>
             {
                 entity.HasKey(e => e.Id); // 设置主键
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(255); // 配置 Email 属性

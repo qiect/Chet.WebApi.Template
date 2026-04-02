@@ -1,4 +1,6 @@
-using Chet.WebApi.Template.Contracts;
+using Chet.WebApi.Template.Contracts.Auth;
+using Chet.WebApi.Template.Contracts.Jwt;
+using Chet.WebApi.Template.Contracts.User;
 using Chet.WebApi.Template.Services;
 
 namespace Chet.WebApi.Template.Api.Configurations;

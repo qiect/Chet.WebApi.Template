@@ -1,6 +1,6 @@
 using Chet.WebApi.Template.DTOs;
 
-namespace Chet.WebApi.Template.Contracts
+namespace Chet.WebApi.Template.Contracts.User
 {
     /// <summary>
     /// 用户服务接口，定义了用户相关的业务逻辑操作
