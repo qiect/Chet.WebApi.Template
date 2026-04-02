@@ -1,4 +1,5 @@
 using Chet.WebApi.Template.Domain;
+using Chet.WebApi.Template.Domain.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chet.WebApi.Template.Data
@@ -19,7 +20,7 @@ namespace Chet.WebApi.Template.Data
         /// <summary>
         /// 表示数据库中的 Users 表
         /// </summary>
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserEnitity> Users { get; set; }
 
         /// <summary>
         /// 配置实体映射和关系
@@ -28,18 +29,8 @@ namespace Chet.WebApi.Template.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            // 配置用户实体
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.HasKey(e => e.Id); // 设置主键
-                entity.Property(e => e.Email).IsRequired().HasMaxLength(255); // 配置 Email 属性
-                entity.HasIndex(e => e.Email).IsUnique(); // 为 Email 添加唯一索引
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(100); // 配置 Name 属性
-                entity.Property(e => e.PasswordHash).IsRequired(); // 配置 PasswordHash 属性
-                entity.Property(e => e.CreatedAt).IsRequired(); // 配置 CreatedAt 属性
-                entity.Property(e => e.UpdatedAt).IsRequired(); // 配置 UpdatedAt 属性
-            });
+            // 从当前程序集自动应用所有实现了 IEntityTypeConfiguration<T> 接口的配置类
+            modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
         }
 
         /// <summary>

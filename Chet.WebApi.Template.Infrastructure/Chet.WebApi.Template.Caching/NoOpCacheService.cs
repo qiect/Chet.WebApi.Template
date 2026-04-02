@@ -1,4 +1,4 @@
-using Chet.WebApi.Template.Contracts;
+using Chet.WebApi.Template.Contracts.Cache;
 using Microsoft.Extensions.Logging;
 
 namespace Chet.WebApi.Template.Caching

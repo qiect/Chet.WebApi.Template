@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Chet.WebApi.Template.DTOs;
+namespace Chet.WebApi.Template.DTOs.User;
 
 /// <summary>
 /// 用户更新数据传输对象，用于接收更新用户信息的请求

@@ -1,6 +1,6 @@
 using Chet.WebApi.Template.Caching;
 using Chet.WebApi.Template.Configuration;
-using Chet.WebApi.Template.Contracts;
+using Chet.WebApi.Template.Contracts.Cache;
 using StackExchange.Redis;
 
 namespace Chet.WebApi.Template.Api.Configurations;

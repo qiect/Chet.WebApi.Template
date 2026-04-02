@@ -1,8 +1,8 @@
 using AutoMapper;
-using Chet.WebApi.Template.Domain;
-using Chet.WebApi.Template.DTOs;
+using Chet.WebApi.Template.Domain.User;
+using Chet.WebApi.Template.DTOs.User;
 
-namespace Chet.WebApi.Template.Mapping;
+namespace Chet.WebApi.Template.Mapping.User;
 
 /// <summary>
 /// AutoMapper配置类，用于定义实体和DTO之间的映射关系
@@ -15,15 +15,15 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         // 用户实体到用户DTO的映射
-        CreateMap<User, UserDto>();
+        CreateMap<UserEnitity, UserDto>();
 
         // 用户创建DTO到用户实体的映射
-        CreateMap<UserCreateDto, User>();
+        CreateMap<UserCreateDto, UserEnitity>();
 
         // 用户更新DTO到用户实体的映射
-        CreateMap<UserUpdateDto, User>();
+        CreateMap<UserUpdateDto, UserEnitity>();
 
         // 注册DTO到用户实体的映射
-        CreateMap<RegisterDto, User>();
+        CreateMap<RegisterDto, UserEnitity>();
     }
 }

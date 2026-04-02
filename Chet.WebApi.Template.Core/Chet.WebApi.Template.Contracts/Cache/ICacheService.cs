@@ -1,4 +1,4 @@
-namespace Chet.WebApi.Template.Contracts
+namespace Chet.WebApi.Template.Contracts.Cache
 {
     /// <summary>
     /// 缓存服务接口，定义了缓存相关的操作

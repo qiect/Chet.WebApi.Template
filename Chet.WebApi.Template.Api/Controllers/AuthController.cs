@@ -1,5 +1,6 @@
-using Chet.WebApi.Template.Contracts;
-using Chet.WebApi.Template.DTOs;
+using Chet.WebApi.Template.Contracts.Auth;
+using Chet.WebApi.Template.DTOs.Auth;
+using Chet.WebApi.Template.DTOs.User;
 using Chet.WebApi.Template.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;

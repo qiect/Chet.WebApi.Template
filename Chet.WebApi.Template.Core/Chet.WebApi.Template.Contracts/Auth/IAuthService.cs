@@ -1,6 +1,7 @@
-using Chet.WebApi.Template.DTOs;
+using Chet.WebApi.Template.DTOs.Auth;
+using Chet.WebApi.Template.DTOs.User;
 
-namespace Chet.WebApi.Template.Contracts
+namespace Chet.WebApi.Template.Contracts.Auth
 {
     /// <summary>
     /// 认证服务接口，定义了用户认证相关的业务逻辑操作

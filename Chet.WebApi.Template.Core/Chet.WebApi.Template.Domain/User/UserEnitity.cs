@@ -1,9 +1,9 @@
-namespace Chet.WebApi.Template.Domain;
+namespace Chet.WebApi.Template.Domain.User;
 
 /// <summary>
 /// 用户实体类，继承自 BaseEntity
 /// </summary>
-public class User : BaseEntity
+public class UserEnitity : BaseEntity
 {
     /// <summary>
     /// 用户名

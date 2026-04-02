@@ -1,13 +1,13 @@
-using Chet.WebApi.Template.Contracts;
-using Chet.WebApi.Template.Domain;
+using Chet.WebApi.Template.Contracts.User;
+using Chet.WebApi.Template.Domain.User;
 using Microsoft.EntityFrameworkCore;
 
-namespace Chet.WebApi.Template.Data;
+namespace Chet.WebApi.Template.Data.User;
 
 /// <summary>
 /// 用户仓储实现类，继承自EfCoreRepository<User>并实现了IUserRepository接口
 /// </summary>
-public class UserRepository : EfCoreRepository<User>, IUserRepository
+public class UserRepository : EfCoreRepository<UserEnitity>, IUserRepository
 {
     /// <summary>
     /// 构造函数
@@ -18,7 +18,7 @@ public class UserRepository : EfCoreRepository<User>, IUserRepository
     }
 
     /// <inheritdoc />
-    public async Task<User> GetByEmailAsync(string email)
+    public async Task<UserEnitity> GetByEmailAsync(string email)
     {
         return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
     }

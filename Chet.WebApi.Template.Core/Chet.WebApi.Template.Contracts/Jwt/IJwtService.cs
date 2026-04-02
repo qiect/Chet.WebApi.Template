@@ -1,8 +1,8 @@
-using Chet.WebApi.Template.Domain;
-using Chet.WebApi.Template.DTOs;
+using Chet.WebApi.Template.Domain.User;
+using Chet.WebApi.Template.DTOs.Auth;
 using System.Security.Claims;
 
-namespace Chet.WebApi.Template.Contracts
+namespace Chet.WebApi.Template.Contracts.Jwt
 {
     /// <summary>
     /// JWT服务接口，定义了JWT令牌相关的操作
@@ -14,7 +14,7 @@ namespace Chet.WebApi.Template.Contracts
         /// </summary>
         /// <param name="user">用户实体</param>
         /// <returns>访问令牌字符串</returns>
-        string GenerateAccessToken(User user);
+        string GenerateAccessToken(UserEnitity user);
 
         /// <summary>
         /// 生成刷新令牌

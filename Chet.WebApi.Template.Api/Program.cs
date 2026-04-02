@@ -4,7 +4,7 @@
 
 using Chet.WebApi.Template.Api.Configurations;
 using Chet.WebApi.Template.Configuration;
-using Chet.WebApi.Template.Mapping;
+using Chet.WebApi.Template.Mapping.User;
 using Serilog;
 
 

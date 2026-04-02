@@ -1,4 +1,4 @@
-namespace Chet.WebApi.Template.DTOs;
+namespace Chet.WebApi.Template.DTOs.User;
 
 /// <summary>
 /// 用户数据传输对象，用于返回用户信息给客户端
