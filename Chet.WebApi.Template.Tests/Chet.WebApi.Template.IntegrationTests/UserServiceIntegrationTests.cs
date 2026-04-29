@@ -278,41 +278,36 @@ namespace Chet.WebApi.Template.IntegrationTests
     /// </summary>
     public class NoOpCacheService : ICacheService
     {
-        /// <summary>
-        /// 从缓存获取值（不执行实际操作）
-        /// </summary>
         public Task<T> GetAsync<T>(string key)
         {
-            return Task.FromResult(default(T));
+            return Task.FromResult(default(T)!);
         }
 
-        /// <summary>
-        /// 设置缓存值（不执行实际操作）
-        /// </summary>
         public Task SetAsync<T>(string key, T value, TimeSpan? expiry = null)
         {
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// 移除缓存项（不执行实际操作）
-        /// </summary>
         public Task RemoveAsync(string key)
         {
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// 检查缓存项是否存在（不执行实际操作）
-        /// </summary>
+        public Task RemoveByPatternAsync(string pattern)
+        {
+            return Task.CompletedTask;
+        }
+
         public Task<bool> ExistsAsync(string key)
         {
             return Task.FromResult(false);
         }
 
-        /// <summary>
-        /// 获取或创建缓存值（直接执行工厂方法而不使用缓存）
-        /// </summary>
+        public Task<string[]> GetKeysByPatternAsync(string pattern)
+        {
+            return Task.FromResult(Array.Empty<string>());
+        }
+
         public async Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> factory, TimeSpan? expiry = null)
         {
             return await factory();

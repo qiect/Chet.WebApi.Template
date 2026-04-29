@@ -29,11 +29,24 @@ namespace Chet.WebApi.Template.Contracts.Cache
         Task RemoveAsync(string key);
 
         /// <summary>
+        /// 根据模式批量删除缓存键
+        /// </summary>
+        /// <param name="pattern">键模式（支持通配符 *）</param>
+        Task RemoveByPatternAsync(string pattern);
+
+        /// <summary>
         /// 检查缓存是否存在
         /// </summary>
         /// <param name="key">缓存键</param>
         /// <returns>如果缓存存在则返回 true，否则返回 false</returns>
         Task<bool> ExistsAsync(string key);
+
+        /// <summary>
+        /// 获取匹配模式的键列表
+        /// </summary>
+        /// <param name="pattern">键模式（支持通配符 *）</param>
+        /// <returns>匹配的键列表</returns>
+        Task<string[]> GetKeysByPatternAsync(string pattern);
 
         /// <summary>
         /// 获取缓存值，如果不存在则使用工厂方法创建并设置缓存

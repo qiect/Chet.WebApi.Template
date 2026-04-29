@@ -42,10 +42,24 @@ namespace Chet.WebApi.Template.Caching
         }
 
         /// <inheritdoc />
+        public Task RemoveByPatternAsync(string pattern)
+        {
+            _logger.LogDebug("NoOpCacheService: RemoveByPatternAsync called for pattern: {Pattern}", pattern);
+            return Task.CompletedTask;
+        }
+
+        /// <inheritdoc />
         public Task<bool> ExistsAsync(string key)
         {
             _logger.LogDebug("NoOpCacheService: ExistsAsync called for key: {Key}", key);
             return Task.FromResult(false);
+        }
+
+        /// <inheritdoc />
+        public Task<string[]> GetKeysByPatternAsync(string pattern)
+        {
+            _logger.LogDebug("NoOpCacheService: GetKeysByPatternAsync called for pattern: {Pattern}", pattern);
+            return Task.FromResult(Array.Empty<string>());
         }
 
         /// <inheritdoc />

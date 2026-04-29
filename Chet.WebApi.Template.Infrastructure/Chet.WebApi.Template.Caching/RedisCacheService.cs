@@ -71,6 +71,31 @@ namespace Chet.WebApi.Template.Caching
         }
 
         /// <inheritdoc />
+        public async Task RemoveByPatternAsync(string pattern)
+        {
+            try
+            {
+                var endpoints = _database.Multiplexer.GetEndPoints();
+
+                foreach (var endpoint in endpoints)
+                {
+                    var server = _database.Multiplexer.GetServer(endpoint);
+                    var keys = server.Keys(pattern: pattern).ToArray();
+
+                    if (keys.Length > 0)
+                    {
+                        await _database.KeyDeleteAsync(keys);
+                        _logger.LogInformation("Removed {Count} keys matching pattern: {Pattern}", keys.Length, pattern);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error removing keys from Redis cache for pattern: {Pattern}", pattern);
+            }
+        }
+
+        /// <inheritdoc />
         public async Task<bool> ExistsAsync(string key)
         {
             try
@@ -81,6 +106,30 @@ namespace Chet.WebApi.Template.Caching
             {
                 _logger.LogError(ex, "Error checking if key exists in Redis cache: {Key}", key);
                 return false;
+            }
+        }
+
+        /// <inheritdoc />
+        public async Task<string[]> GetKeysByPatternAsync(string pattern)
+        {
+            try
+            {
+                var endpoints = _database.Multiplexer.GetEndPoints();
+                var allKeys = new List<string>();
+
+                foreach (var endpoint in endpoints)
+                {
+                    var server = _database.Multiplexer.GetServer(endpoint);
+                    var keys = server.Keys(pattern: pattern).Select(k => k.ToString());
+                    allKeys.AddRange(keys);
+                }
+
+                return allKeys.ToArray();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting keys by pattern from Redis cache: {Pattern}", pattern);
+                return [];
             }
         }
 
