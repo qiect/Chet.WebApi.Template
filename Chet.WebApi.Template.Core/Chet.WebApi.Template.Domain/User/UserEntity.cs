@@ -3,7 +3,7 @@ namespace Chet.WebApi.Template.Domain.User;
 /// <summary>
 /// 用户实体类，继承自 BaseEntity
 /// </summary>
-public class UserEnitity : BaseEntity
+public class UserEntity : BaseEntity
 {
     /// <summary>
     /// 用户名

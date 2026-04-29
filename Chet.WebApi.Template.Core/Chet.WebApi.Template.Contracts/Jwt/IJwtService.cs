@@ -14,7 +14,7 @@ namespace Chet.WebApi.Template.Contracts.Jwt
         /// </summary>
         /// <param name="user">用户实体</param>
         /// <returns>访问令牌字符串</returns>
-        string GenerateAccessToken(UserEnitity user);
+        string GenerateAccessToken(UserEntity user);
 
         /// <summary>
         /// 生成刷新令牌

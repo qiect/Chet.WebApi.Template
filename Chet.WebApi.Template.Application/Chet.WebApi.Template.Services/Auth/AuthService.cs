@@ -92,7 +92,7 @@ public class AuthService : IAuthService
         }
 
         // 将注册DTO映射为用户实体
-        var user = _mapper.Map<UserEnitity>(registerDto);
+        var user = _mapper.Map<UserEntity>(registerDto);
         // 对密码进行哈希处理
         user.PasswordHash = HashPassword(registerDto.Password);
 

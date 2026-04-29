@@ -20,7 +20,7 @@ namespace Chet.WebApi.Template.Data
         /// <summary>
         /// 表示数据库中的 Users 表
         /// </summary>
-        public DbSet<UserEnitity> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
         /// <summary>
         /// 配置实体映射和关系

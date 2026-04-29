@@ -54,7 +54,7 @@ public class UserService : IUserService
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
-                throw new NotFoundException(nameof(UserEnitity), id);
+                throw new NotFoundException(nameof(UserEntity), id);
             }
             return _mapper.Map<UserDto>(user);
         }, TimeSpan.FromMinutes(30)); // 缓存30分钟
@@ -81,7 +81,7 @@ public class UserService : IUserService
         _logger.LogInformation("Creating user: {Email}", userCreateDto.Email);
 
         // 将DTO映射为实体
-        var user = _mapper.Map<UserEnitity>(userCreateDto);
+        var user = _mapper.Map<UserEntity>(userCreateDto);
         // 对密码进行哈希处理
         user.PasswordHash = HashPassword(userCreateDto.Password);
         // 添加到数据库
@@ -126,7 +126,7 @@ public class UserService : IUserService
         var user = await _userRepository.GetByIdAsync(id);
         if (user == null)
         {
-            throw new NotFoundException(nameof(UserEnitity), id);
+            throw new NotFoundException(nameof(UserEntity), id);
         }
 
         // 更新用户信息
@@ -147,7 +147,7 @@ public class UserService : IUserService
         var user = await _userRepository.GetByIdAsync(id);
         if (user == null)
         {
-            throw new NotFoundException(nameof(UserEnitity), id);
+            throw new NotFoundException(nameof(UserEntity), id);
         }
 
         // 删除用户

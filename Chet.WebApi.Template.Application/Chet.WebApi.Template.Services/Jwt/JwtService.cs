@@ -35,7 +35,7 @@ public class JwtService : IJwtService
     }
 
     /// <inheritdoc />
-    public string GenerateAccessToken(UserEnitity user)
+    public string GenerateAccessToken(UserEntity user)
     {
         _logger.LogInformation("Generating access token for user: {Email}", user.Email);
 

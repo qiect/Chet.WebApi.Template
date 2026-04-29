@@ -7,7 +7,7 @@ namespace Chet.WebApi.Template.Data.User;
 /// <summary>
 /// 用户仓储实现类，继承自EfCoreRepository<User>并实现了IUserRepository接口
 /// </summary>
-public class UserRepository : EfCoreRepository<UserEnitity>, IUserRepository
+public class UserRepository : EfCoreRepository<UserEntity>, IUserRepository
 {
     /// <summary>
     /// 构造函数
@@ -18,7 +18,7 @@ public class UserRepository : EfCoreRepository<UserEnitity>, IUserRepository
     }
 
     /// <inheritdoc />
-    public async Task<UserEnitity> GetByEmailAsync(string email)
+    public async Task<UserEntity> GetByEmailAsync(string email)
     {
         return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
     }

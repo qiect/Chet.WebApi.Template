@@ -48,7 +48,7 @@ namespace Chet.WebApi.Template.UnitTests
         {
             // Arrange - 准备测试数据和模拟行为
             var userId = 1;
-            var userEntity = new UserEnitity { Id = userId, Name = "Test User", Email = "test@example.com" };
+            var userEntity = new UserEntity { Id = userId, Name = "Test User", Email = "test@example.com" };
             var expectedUserDto = new UserDto { Id = userId, Name = "Test User", Email = "test@example.com", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
 
             // 设置缓存服务的行为：绕过缓存直接调用工厂方法
@@ -85,7 +85,7 @@ namespace Chet.WebApi.Template.UnitTests
             _mockCacheService.Setup(x => x.GetOrCreateAsync(It.IsAny<string>(), It.IsAny<Func<Task<UserDto>>>(), It.IsAny<TimeSpan>()))
                 .Returns<string, Func<Task<UserDto>>, TimeSpan>((key, factory, expiry) => factory());
             // 设置用户存储库的行为：当调用GetByIdAsync并传入userId时，返回null
-            _mockUserRepository.Setup(x => x.GetByIdAsync(userId)).ReturnsAsync((UserEnitity)null);
+            _mockUserRepository.Setup(x => x.GetByIdAsync(userId)).ReturnsAsync((UserEntity)null);
 
             // Act & Assert - 验证调用方法会抛出NotFoundException
             await Assert.ThrowsAsync<NotFoundException>(() => _userService.GetUserByIdAsync(userId));
@@ -101,10 +101,10 @@ namespace Chet.WebApi.Template.UnitTests
         public async Task GetAllUsersAsync_ReturnsAllUsers()
         {
             // Arrange - 准备测试数据和模拟行为
-            var users = new List<UserEnitity>
+            var users = new List<UserEntity>
             {
-                new UserEnitity { Id = 1, Name = "User 1", Email = "user1@example.com" },
-                new UserEnitity { Id = 2, Name = "User 2", Email = "user2@example.com" }
+                new UserEntity { Id = 1, Name = "User 1", Email = "user1@example.com" },
+                new UserEntity { Id = 2, Name = "User 2", Email = "user2@example.com" }
             }.AsEnumerable();
 
             var expectedUserDtos = new List<UserDto>
@@ -147,7 +147,7 @@ namespace Chet.WebApi.Template.UnitTests
                 Password = "password123"
             };
 
-            var userEntity = new UserEnitity
+            var userEntity = new UserEntity
             {
                 Id = 1,
                 Name = "New User",
@@ -164,7 +164,7 @@ namespace Chet.WebApi.Template.UnitTests
             };
 
             // 设置映射器的行为：当映射UserCreateDto到User时，返回userEntity
-            _mockMapper.Setup(x => x.Map<UserEnitity>(userCreateDto)).Returns(userEntity);
+            _mockMapper.Setup(x => x.Map<UserEntity>(userCreateDto)).Returns(userEntity);
             // 设置用户存储库的行为：当调用AddAsync时，返回已完成的任务
             _mockUserRepository.Setup(x => x.AddAsync(userEntity)).Returns(Task.CompletedTask);
             // 设置缓存服务的行为：当调用RemoveAsync时，返回已完成的任务
@@ -180,7 +180,7 @@ namespace Chet.WebApi.Template.UnitTests
             Assert.Equal(expectedUserDto.Name, result.Name);
             Assert.Equal(expectedUserDto.Email, result.Email);
             // 验证映射方法被调用了一次
-            _mockMapper.Verify(x => x.Map<UserEnitity>(userCreateDto), Times.Once);
+            _mockMapper.Verify(x => x.Map<UserEntity>(userCreateDto), Times.Once);
             // 验证AddAsync方法被调用了一次
             _mockUserRepository.Verify(x => x.AddAsync(userEntity), Times.Once);
             // 验证缓存"all"键被移除了一次
@@ -204,7 +204,7 @@ namespace Chet.WebApi.Template.UnitTests
                 Email = "updated@example.com"
             };
 
-            var existingUser = new UserEnitity
+            var existingUser = new UserEntity
             {
                 Id = userId,
                 Name = "Old Name",
@@ -258,7 +258,7 @@ namespace Chet.WebApi.Template.UnitTests
             };
 
             // 设置用户存储库的行为：当调用GetByIdAsync并传入userId时，返回null
-            _mockUserRepository.Setup(x => x.GetByIdAsync(userId)).ReturnsAsync((UserEnitity)null);
+            _mockUserRepository.Setup(x => x.GetByIdAsync(userId)).ReturnsAsync((UserEntity)null);
 
             // Act & Assert - 验证调用方法会抛出NotFoundException
             await Assert.ThrowsAsync<NotFoundException>(() => _userService.UpdateUserAsync(userId, userUpdateDto));
@@ -275,7 +275,7 @@ namespace Chet.WebApi.Template.UnitTests
         {
             // Arrange - 准备测试数据和模拟行为
             var userId = 1;
-            var existingUser = new UserEnitity
+            var existingUser = new UserEntity
             {
                 Id = userId,
                 Name = "User to Delete",
@@ -313,7 +313,7 @@ namespace Chet.WebApi.Template.UnitTests
             // Arrange - 准备测试数据和模拟行为
             var userId = 999;
             // 设置用户存储库的行为：当调用GetByIdAsync并传入userId时，返回null
-            _mockUserRepository.Setup(x => x.GetByIdAsync(userId)).ReturnsAsync((UserEnitity)null);
+            _mockUserRepository.Setup(x => x.GetByIdAsync(userId)).ReturnsAsync((UserEntity)null);
 
             // Act & Assert - 验证调用方法会抛出NotFoundException
             await Assert.ThrowsAsync<NotFoundException>(() => _userService.DeleteUserAsync(userId));
