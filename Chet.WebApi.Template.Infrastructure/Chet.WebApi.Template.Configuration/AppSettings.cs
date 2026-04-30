@@ -37,6 +37,11 @@ namespace Chet.WebApi.Template.Configuration
         public string? Key { get; set; }
 
         /// <summary>
+        /// JWT签名密钥，用于生成和验证令牌
+        /// </summary>
+        public string? SecretKey { get; set; }
+
+        /// <summary>
         /// JWT令牌发行者
         /// </summary>
         public string? Issuer { get; set; }

@@ -34,8 +34,8 @@ public static class JwtConfiguration
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = appSettings.Jwt.Issuer,
                         ValidAudience = appSettings.Jwt.Audience,
-                        // 使用配置中的Key，确保与生成令牌时使用相同的密钥
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.Jwt.Key ?? "DefaultJwtSecretKey"))
+                        // 使用配置中的SecretKey，确保与生成令牌时使用相同的密钥
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.Jwt.SecretKey ?? "DefaultJwtSecretKey"))
                     };
                 });
         }
