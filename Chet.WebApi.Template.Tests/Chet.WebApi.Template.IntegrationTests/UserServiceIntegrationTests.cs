@@ -312,5 +312,10 @@ namespace Chet.WebApi.Template.IntegrationTests
         {
             return await factory();
         }
+
+        public Task<bool> PingAsync()
+        {
+            return Task.FromResult(true);
+        }
     }
 }
