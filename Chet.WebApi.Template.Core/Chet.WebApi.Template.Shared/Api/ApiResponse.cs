@@ -21,7 +21,13 @@ public abstract class ApiResponseBase
     public string? Message { get; set; }
 
     /// <summary>
-    /// 响应时间戳
+    /// 响应时间戳（UTC时间）
+    /// <para>
+    /// 使用 UTC 时间确保：
+    /// - 跨时区一致性
+    /// - 避免夏令时问题
+    /// - 便于日志追踪和问题排查
+    /// </para>
     /// </summary>
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 

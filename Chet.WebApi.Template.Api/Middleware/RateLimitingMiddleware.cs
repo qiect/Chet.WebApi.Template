@@ -130,6 +130,7 @@ public class RateLimitingMiddleware
 
         var clientIp = GetClientIpAddress(context);
         var key = $"{clientIp}:{path}";
+        // 使用 UTC 时间进行限流计算，避免时区问题
         var now = DateTime.UtcNow;
         
         var windowMinutes = 1;
@@ -228,6 +229,7 @@ public class RateLimitingMiddleware
     /// </remarks>
     private static void CleanupExpiredRecords(object? state)
     {
+        // 使用 UTC 时间计算截止时间，确保与限流逻辑时间一致
         var cutoffTime = DateTime.UtcNow.AddMinutes(-5);
 
         foreach (var key in _requestLog.Keys.Where(k => _requestLog.TryGetValue(k, out var record) && record.WindowStart < cutoffTime).ToList())

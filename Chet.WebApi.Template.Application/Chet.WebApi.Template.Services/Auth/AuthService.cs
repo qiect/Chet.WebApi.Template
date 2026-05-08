@@ -61,6 +61,7 @@ public class AuthService : IAuthService
             var refreshToken = _jwtService.GenerateRefreshToken();
 
             user.RefreshToken = refreshToken;
+            // 使用 UTC 时间计算过期时间，确保跨时区一致性
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_appSettings.Jwt?.RefreshTokenExpirationDays ?? 7);
 
             _unitOfWork.Users.Update(user);
