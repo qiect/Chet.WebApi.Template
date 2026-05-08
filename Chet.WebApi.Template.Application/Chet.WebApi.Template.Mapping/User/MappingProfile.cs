@@ -15,15 +15,15 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         // 用户实体到用户DTO的映射
-        CreateMap<UserEnitity, UserDto>();
+        CreateMap<UserEntity, UserDto>();
 
         // 用户创建DTO到用户实体的映射
-        CreateMap<UserCreateDto, UserEnitity>();
+        CreateMap<UserCreateDto, UserEntity>();
 
         // 用户更新DTO到用户实体的映射
-        CreateMap<UserUpdateDto, UserEnitity>();
+        CreateMap<UserUpdateDto, UserEntity>();
 
         // 注册DTO到用户实体的映射
-        CreateMap<RegisterDto, UserEnitity>();
+        CreateMap<RegisterDto, UserEntity>();
     }
 }

@@ -7,9 +7,9 @@ namespace Chet.WebApi.Template.Data.User
     /// <summary>
     /// 用户配置
     /// </summary>
-    public class UserConfig : IEntityTypeConfiguration<UserEnitity>
+    public class UserConfig : IEntityTypeConfiguration<UserEntity>
     {
-        public void Configure(EntityTypeBuilder<UserEnitity> builder)
+        public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
             builder.HasKey(e => e.Id); // 设置主键
             builder.ToTable("Users");

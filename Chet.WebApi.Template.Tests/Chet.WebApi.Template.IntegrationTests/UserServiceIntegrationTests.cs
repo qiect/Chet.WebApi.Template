@@ -1,10 +1,12 @@
 using Chet.WebApi.Template.Contracts.Cache;
+using Chet.WebApi.Template.Contracts.Security;
 using Chet.WebApi.Template.Contracts.User;
 using Chet.WebApi.Template.Data;
 using Chet.WebApi.Template.Data.User;
 using Chet.WebApi.Template.Domain.User;
 using Chet.WebApi.Template.DTOs.User;
 using Chet.WebApi.Template.Mapping.User;
+using Chet.WebApi.Template.Services.Security;
 using Chet.WebApi.Template.Services.User;
 using Chet.WebApi.Template.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +42,9 @@ namespace Chet.WebApi.Template.IntegrationTests
             // 注册其他服务
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            
+            // 注册密码服务
+            services.AddScoped<IPasswordService, PasswordService>();
 
             // 注册AutoMapper，自动映射配置
             services.AddAutoMapper(typeof(MappingProfile));
@@ -66,7 +71,7 @@ namespace Chet.WebApi.Template.IntegrationTests
         public async Task GetUserByIdAsync_WithExistingUser_ReturnsUser()
         {
             // Arrange - 准备测试数据：创建并保存一个用户到内存数据库
-            var user = new UserEnitity
+            var user = new UserEntity
             {
                 Name = "Test User",
                 Email = "test@example.com",
@@ -104,10 +109,10 @@ namespace Chet.WebApi.Template.IntegrationTests
         public async Task GetAllUsersAsync_ReturnsAllUsers()
         {
             // Arrange - 准备测试数据：创建并保存多个用户到内存数据库
-            var users = new List<UserEnitity>
+            var users = new List<UserEntity>
             {
-                new UserEnitity { Name = "User 1", Email = "user1@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") },
-                new UserEnitity { Name = "User 2", Email = "user2@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") }
+                new UserEntity { Name = "User 1", Email = "user1@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") },
+                new UserEntity { Name = "User 2", Email = "user2@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("password") }
             };
 
             await _dbContext.Users.AddRangeAsync(users);
@@ -165,7 +170,7 @@ namespace Chet.WebApi.Template.IntegrationTests
         public async Task UpdateUserAsync_WithValidData_UpdatesUser()
         {
             // Arrange - 准备测试数据：创建并保存一个初始用户到数据库
-            var user = new UserEnitity
+            var user = new UserEntity
             {
                 Name = "Original Name",              // 初始用户名
                 Email = "original@example.com",      // 初始邮箱
@@ -226,7 +231,7 @@ namespace Chet.WebApi.Template.IntegrationTests
         public async Task DeleteUserAsync_WithExistingUser_DeletesUser()
         {
             // Arrange - 准备测试数据：创建并保存一个待删除的用户到数据库
-            var user = new UserEnitity
+            var user = new UserEntity
             {
                 Name = "User to Delete",                   // 待删除的用户名
                 Email = "delete@example.com",              // 待删除的邮箱
@@ -278,44 +283,44 @@ namespace Chet.WebApi.Template.IntegrationTests
     /// </summary>
     public class NoOpCacheService : ICacheService
     {
-        /// <summary>
-        /// 从缓存获取值（不执行实际操作）
-        /// </summary>
         public Task<T> GetAsync<T>(string key)
         {
-            return Task.FromResult(default(T));
+            return Task.FromResult(default(T)!);
         }
 
-        /// <summary>
-        /// 设置缓存值（不执行实际操作）
-        /// </summary>
         public Task SetAsync<T>(string key, T value, TimeSpan? expiry = null)
         {
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// 移除缓存项（不执行实际操作）
-        /// </summary>
         public Task RemoveAsync(string key)
         {
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// 检查缓存项是否存在（不执行实际操作）
-        /// </summary>
+        public Task RemoveByPatternAsync(string pattern)
+        {
+            return Task.CompletedTask;
+        }
+
         public Task<bool> ExistsAsync(string key)
         {
             return Task.FromResult(false);
         }
 
-        /// <summary>
-        /// 获取或创建缓存值（直接执行工厂方法而不使用缓存）
-        /// </summary>
+        public Task<string[]> GetKeysByPatternAsync(string pattern)
+        {
+            return Task.FromResult(Array.Empty<string>());
+        }
+
         public async Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> factory, TimeSpan? expiry = null)
         {
             return await factory();
+        }
+
+        public Task<bool> PingAsync()
+        {
+            return Task.FromResult(true);
         }
     }
 }

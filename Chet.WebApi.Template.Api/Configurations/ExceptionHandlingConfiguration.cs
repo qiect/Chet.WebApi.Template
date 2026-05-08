@@ -1,5 +1,6 @@
 using Chet.WebApi.Template.Shared;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.IdentityModel.Tokens;
 using System.Net;
 
 namespace Chet.WebApi.Template.Api.Configurations;
@@ -47,6 +48,11 @@ public static class ExceptionHandlingConfiguration
                     message = exception.Message;
                 }
                 else if (exception is UnauthorizedAccessException)
+                {
+                    statusCode = HttpStatusCode.Unauthorized;
+                    message = exception.Message;
+                }
+                else if (exception is SecurityTokenException)
                 {
                     statusCode = HttpStatusCode.Unauthorized;
                     message = exception.Message;

@@ -32,7 +32,7 @@ namespace Chet.WebApi.Template.Configuration
         public bool Enabled { get; set; } = true;
 
         /// <summary>
-        /// JWT签名密钥，用于生成和验证令牌（兼容旧版配置）
+        /// JWT签名密钥，用于生成和验证令牌
         /// </summary>
         public string? Key { get; set; }
 
