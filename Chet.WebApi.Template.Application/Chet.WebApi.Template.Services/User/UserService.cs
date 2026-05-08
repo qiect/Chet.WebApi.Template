@@ -65,6 +65,18 @@ public class UserService : IUserService
         }, CacheKeys.Expiry.Medium);
     }
 
+    public async Task<PagedResult<UserDto>> GetPagedUsersAsync(PagedRequest request)
+    {
+        _logger.LogInformation("Getting paged users: Page {PageNumber}, Size {PageSize}", request.PageNumber, request.PageSize);
+
+        request.Normalize();
+
+        var pagedUsers = await _userRepository.GetPagedAsync(request);
+        var userDtos = _mapper.Map<List<UserDto>>(pagedUsers.Items);
+
+        return new PagedResult<UserDto>(userDtos, request.PageNumber, request.PageSize, pagedUsers.Metadata.TotalCount);
+    }
+
     public async Task<UserDto> CreateUserAsync(UserCreateDto userCreateDto)
     {
         _logger.LogInformation("Creating user: {Email}", userCreateDto.Email);

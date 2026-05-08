@@ -1,4 +1,5 @@
 using Chet.WebApi.Template.DTOs.User;
+using Chet.WebApi.Template.Shared;
 
 namespace Chet.WebApi.Template.Contracts.User
 {
@@ -19,6 +20,13 @@ namespace Chet.WebApi.Template.Contracts.User
         /// </summary>
         /// <returns>用户DTO列表</returns>
         Task<IEnumerable<UserDto>> GetAllUsersAsync();
+
+        /// <summary>
+        /// 分页获取用户信息
+        /// </summary>
+        /// <param name="request">分页请求参数</param>
+        /// <returns>分页用户结果</returns>
+        Task<PagedResult<UserDto>> GetPagedUsersAsync(PagedRequest request);
 
         /// <summary>
         /// 创建新用户
