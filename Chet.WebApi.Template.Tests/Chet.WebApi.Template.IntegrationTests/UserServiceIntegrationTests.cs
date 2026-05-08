@@ -1,10 +1,12 @@
 using Chet.WebApi.Template.Contracts.Cache;
+using Chet.WebApi.Template.Contracts.Security;
 using Chet.WebApi.Template.Contracts.User;
 using Chet.WebApi.Template.Data;
 using Chet.WebApi.Template.Data.User;
 using Chet.WebApi.Template.Domain.User;
 using Chet.WebApi.Template.DTOs.User;
 using Chet.WebApi.Template.Mapping.User;
+using Chet.WebApi.Template.Services.Security;
 using Chet.WebApi.Template.Services.User;
 using Chet.WebApi.Template.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +42,9 @@ namespace Chet.WebApi.Template.IntegrationTests
             // 注册其他服务
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            
+            // 注册密码服务
+            services.AddScoped<IPasswordService, PasswordService>();
 
             // 注册AutoMapper，自动映射配置
             services.AddAutoMapper(typeof(MappingProfile));
