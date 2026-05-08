@@ -1,5 +1,4 @@
 using Chet.WebApi.Template.Contracts.Security;
-using static BCrypt.Net.BCrypt;
 
 namespace Chet.WebApi.Template.Services.Security;
 
@@ -127,7 +126,7 @@ public class PasswordService : IPasswordService
         if (password.Length < 6)
             throw new ArgumentException("Password must be at least 6 characters", nameof(password));
 
-        return HashPassword(password, WorkFactor);
+        return global::BCrypt.Net.BCrypt.HashPassword(password, WorkFactor);
     }
 
     /// <summary>
@@ -163,7 +162,7 @@ public class PasswordService : IPasswordService
 
         try
         {
-            return Verify(password, hash);
+            return global::BCrypt.Net.BCrypt.Verify(password, hash);
         }
         catch
         {

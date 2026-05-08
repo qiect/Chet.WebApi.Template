@@ -106,7 +106,7 @@ public class JwtService : IJwtService
 
         // 使用框架中设计好的AppSettings配置
         var jwtSettings = _appSettings.Jwt ?? new JwtSettings();
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key ?? "DefaultJwtSecretKey"));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey ?? "DefaultJwtSecretKeyForJWTAuthentication1234567890"));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         // 创建 JWT 令牌
@@ -177,11 +177,14 @@ public class JwtService : IJwtService
             ValidateAudience = false,
             ValidateIssuer = false,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key ?? "DefaultJwtSecretKey")),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey ?? "DefaultJwtSecretKeyForJWTAuthentication1234567890")),
             ValidateLifetime = false // 不验证令牌过期时间
         };
 
-        var tokenHandler = new JwtSecurityTokenHandler();
+        var tokenHandler = new JwtSecurityTokenHandler
+        {
+            MapInboundClaims = false
+        };
         var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
         // 验证令牌算法是否为 HmacSha256
         if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
@@ -242,17 +245,46 @@ public class JwtService : IJwtService
     {
         _logger.LogInformation("Refreshing token");
 
-        // 从过期令牌获取声明主体
-        var principal = GetPrincipalFromExpiredToken(accessToken);
+        ClaimsPrincipal principal;
+        try
+        {
+            // 从过期令牌获取声明主体
+            principal = GetPrincipalFromExpiredToken(accessToken);
+        }
+        catch (SecurityTokenException)
+        {
+            _logger.LogWarning("Refresh token failed: invalid access token");
+            throw new SecurityTokenException("Invalid access token");
+        }
+
         // 获取用户ID
-        var userId = Convert.ToInt32(principal.FindFirst(JwtRegisteredClaimNames.Sub)?.Value);
+        var subClaim = principal.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+        if (string.IsNullOrEmpty(subClaim) || !int.TryParse(subClaim, out var userId) || userId <= 0)
+        {
+            _logger.LogWarning("Refresh token failed: invalid user id in access token");
+            throw new SecurityTokenException("Invalid access token");
+        }
+
         // 获取用户信息
         var user = await _userRepository.GetByIdAsync(userId);
 
         // 验证刷新令牌
-        if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime < DateTime.Now)
+        if (user == null)
         {
+            _logger.LogWarning("Refresh token failed: user not found (userId: {UserId})", userId);
+            throw new SecurityTokenException("User not found");
+        }
+
+        if (user.RefreshToken != refreshToken)
+        {
+            _logger.LogWarning("Refresh token failed: refresh token mismatch (userId: {UserId})", userId);
             throw new SecurityTokenException("Invalid refresh token");
+        }
+
+        if (user.RefreshTokenExpiryTime < DateTime.Now)
+        {
+            _logger.LogWarning("Refresh token failed: refresh token expired (userId: {UserId})", userId);
+            throw new SecurityTokenException("Refresh token expired");
         }
 
         // 生成新的访问令牌和刷新令牌

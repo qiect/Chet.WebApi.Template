@@ -69,16 +69,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.ConfigureSerilog();
 
-var jwtSecretKey = Environment.GetEnvironmentVariable("JWT__SECRETKEY")
-    ?? builder.Configuration["Jwt:SecretKey"];
-
-if (string.IsNullOrWhiteSpace(jwtSecretKey))
-{
-    Log.Fatal("JWT Secret Key is not configured! Please set JWT__SECRETKEY environment variable or configure in appsettings.");
-    throw new InvalidOperationException("JWT Secret Key is required for application startup");
-}
-
-builder.Configuration["AppSettings:Jwt:SecretKey"] = jwtSecretKey;
 
 var appSettings = builder.Configuration.GetSection("AppSettings").Get<AppSettings>();
 builder.Services.AddSingleton(appSettings!);
