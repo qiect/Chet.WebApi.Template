@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Chet.WebApi.Template.DTOs.User;
 
 /// <summary>
@@ -92,8 +90,6 @@ public class RegisterDto
     /// 此字段会在个人资料、评论、消息等场景中显示。
     /// </para>
     /// </summary>
-    [Required(ErrorMessage = "用户名不能为空")]
-    [MaxLength(100, ErrorMessage = "用户名长度不能超过100个字符")]
     public required string Name { get; set; }
 
     /// <summary>
@@ -104,9 +100,6 @@ public class RegisterDto
     /// 建议使用真实有效的邮箱地址以便接收通知和找回密码。
     /// </para>
     /// </summary>
-    [Required(ErrorMessage = "邮箱不能为空")]
-    [EmailAddress(ErrorMessage = "请输入有效的邮箱地址")]
-    [MaxLength(255, ErrorMessage = "邮箱长度不能超过255个字符")]
     public required string Email { get; set; }
 
     /// <summary>
@@ -125,7 +118,5 @@ public class RegisterDto
     ///   <item><description>避免使用常见密码或个人信息</description></item>
     /// </list>
     /// </summary>
-    [Required(ErrorMessage = "密码不能为空")]
-    [MinLength(6, ErrorMessage = "密码长度不能少于6个字符")]
     public required string Password { get; set; }
 }

@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Chet.WebApi.Template.DTOs.User;
 
 /// <summary>
@@ -73,8 +71,6 @@ public class LoginDto
     /// 然后验证密码哈希是否匹配。
     /// </para>
     /// </summary>
-    [Required(ErrorMessage = "邮箱不能为空")]
-    [EmailAddress(ErrorMessage = "请输入有效的邮箱地址")]
     public required string Email { get; set; }
 
     /// <summary>
@@ -85,6 +81,5 @@ public class LoginDto
     /// 明文密码不会被记录或存储。
     /// </para>
     /// </summary>
-    [Required(ErrorMessage = "密码不能为空")]
     public required string Password { get; set; }
 }

@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Chet.WebApi.Template.DTOs.User;
 
 /// <summary>
@@ -10,15 +8,10 @@ public class UserUpdateDto
     /// <summary>
     /// 用户名，用于标识用户
     /// </summary>
-    [Required(ErrorMessage = "用户名不能为空")]
-    [MaxLength(100, ErrorMessage = "用户名长度不能超过100个字符")]
     public required string Name { get; set; }
 
     /// <summary>
     /// 用户邮箱，用于登录和通知
     /// </summary>
-    [Required(ErrorMessage = "邮箱不能为空")]
-    [EmailAddress(ErrorMessage = "请输入有效的邮箱地址")]
-    [MaxLength(255, ErrorMessage = "邮箱长度不能超过255个字符")]
     public required string Email { get; set; }
 }

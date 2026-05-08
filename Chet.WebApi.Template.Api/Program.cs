@@ -92,6 +92,8 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.ConfigureRepositories();
 builder.Services.ConfigureServices();
 
+builder.Services.ConfigureFluentValidation();
+
 builder.Services.ConfigureJwt(appSettings);
 
 builder.Services.ConfigureCors(builder.Configuration);

@@ -23,7 +23,7 @@ public abstract class ApiResponseBase
     /// <summary>
     /// 响应时间戳
     /// </summary>
-    public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+    public DateTime Timestamp { get; set; } = DateTime.Now;
 
     protected ApiResponseBase()
     {
@@ -256,4 +256,15 @@ public class PaginatedResponse<T> : ApiResponse<PagedResult<T>>
             Data = result
         };
     }
+}
+
+/// <summary>
+/// 验证错误响应类，用于返回模型验证失败的详细信息
+/// </summary>
+public class ValidationErrorResponse : ApiResponseBase
+{
+    /// <summary>
+    /// 验证错误字典，键为字段名，值为该字段的错误信息数组
+    /// </summary>
+    public Dictionary<string, string[]>? Errors { get; set; }
 }

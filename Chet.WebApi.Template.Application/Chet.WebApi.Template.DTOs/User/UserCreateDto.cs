@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Chet.WebApi.Template.DTOs.User;
 
 /// <summary>
@@ -65,8 +63,6 @@ public class UserCreateDto
     /// 此字段会在用户列表和个人资料中显示。
     /// </para>
     /// </summary>
-    [Required(ErrorMessage = "用户名不能为空")]
-    [MaxLength(100, ErrorMessage = "用户名长度不能超过100个字符")]
     public required string Name { get; set; }
 
     /// <summary>
@@ -76,9 +72,6 @@ public class UserCreateDto
     /// 系统会发送验证邮件、通知等信息到此邮箱。
     /// </para>
     /// </summary>
-    [Required(ErrorMessage = "邮箱不能为空")]
-    [EmailAddress(ErrorMessage = "请输入有效的邮箱地址")]
-    [MaxLength(255, ErrorMessage = "邮箱长度不能超过255个字符")]
     public required string Email { get; set; }
 
     /// <summary>
@@ -89,7 +82,5 @@ public class UserCreateDto
     /// 最小长度6个字符，建议12个字符以上以提高安全性。
     /// </para>
     /// </summary>
-    [Required(ErrorMessage = "密码不能为空")]
-    [MinLength(6, ErrorMessage = "密码长度不能少于6个字符")]
     public required string Password { get; set; }
 }
