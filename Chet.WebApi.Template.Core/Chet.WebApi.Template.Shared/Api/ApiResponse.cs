@@ -23,7 +23,7 @@ public abstract class ApiResponseBase
     /// <summary>
     /// 响应时间戳
     /// </summary>
-    public DateTime Timestamp { get; set; } = DateTime.Now;
+    public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 
     protected ApiResponseBase()
     {

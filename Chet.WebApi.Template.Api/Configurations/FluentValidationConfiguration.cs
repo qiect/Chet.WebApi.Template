@@ -34,7 +34,7 @@ public static class FluentValidationConfiguration
                     Success = false,
                     Message = "Validation failed",
                     Errors = errors,
-                    Timestamp = DateTime.Now
+                    Timestamp = DateTime.UtcNow
                 };
 
                 return new BadRequestObjectResult(response)
