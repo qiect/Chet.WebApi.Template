@@ -143,7 +143,7 @@ public class HealthController : ControllerBase
         try
         {
             using var scope = serviceProvider.CreateScope();
-            var context = scope.ServiceProvider.GetService<Microsoft.EntityFrameworkCore.DbContext>();
+            var context = scope.ServiceProvider.GetService<Chet.WebApi.Template.Data.AppDbContext>();
             if (context != null)
             {
                 await context.Database.CanConnectAsync();
