@@ -116,6 +116,9 @@ await app.InitializeDatabaseAsync();
 
 app.ConfigureExceptionHandling();
 
+// 添加日志上下文中间件，为所有请求添加上下文信息
+app.UseLogContext();
+
 app.UseCors("DefaultPolicy");
 
 app.UseRateLimiting();

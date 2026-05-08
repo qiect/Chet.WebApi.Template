@@ -1,5 +1,6 @@
 using Serilog;
 using Serilog.Events;
+using Chet.WebApi.Template.Logging;
 
 namespace Chet.WebApi.Template.Api.Configurations;
 
@@ -44,6 +45,10 @@ public static class SerilogConfiguration
                         .Enrich.WithEnvironmentUserName()
                         .Enrich.WithProperty("Application", "Chet.WebApi.Template")
                         .Enrich.WithProperty("Environment", context.HostingEnvironment.EnvironmentName);
+            
+            // 添加敏感信息过滤器（可选）
+            // 自动过滤包含密码、令牌等敏感信息的日志
+            // configuration.Filter.With<SensitiveDataLogFilter>();
             
             // 开发环境特殊配置
             if (context.HostingEnvironment.IsDevelopment())
