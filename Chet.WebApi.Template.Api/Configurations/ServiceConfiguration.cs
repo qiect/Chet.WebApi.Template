@@ -1,3 +1,4 @@
+using Chet.WebApi.Template.Contracts;
 using Chet.WebApi.Template.Contracts.Auth;
 using Chet.WebApi.Template.Contracts.Jwt;
 using Chet.WebApi.Template.Contracts.Security;
@@ -20,10 +21,10 @@ public static class ServiceConfiguration
     /// <param name="services">IServiceCollection实例</param>
     public static void ConfigureServices(this IServiceCollection services)
     {
+        services.AddScoped<IUnitOfWork, Data.UnitOfWork>();
         services.AddScoped<IPasswordService, PasswordService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IJwtService, JwtService>();
-        services.AddScoped<Chet.WebApi.Template.Contracts.IUnitOfWork, Data.UnitOfWork>();
     }
 }

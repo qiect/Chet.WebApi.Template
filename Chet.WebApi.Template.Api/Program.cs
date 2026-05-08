@@ -79,6 +79,8 @@ builder.Services.AddSingleton(appSettings!);
 
 builder.Services.AddControllers();
 
+builder.Services.ConfigureApiVersioning();
+
 builder.Services.ConfigureSwagger();
 
 builder.Services.ConfigureDatabase(builder.Configuration);
@@ -91,8 +93,6 @@ builder.Services.ConfigureRepositories();
 builder.Services.ConfigureServices();
 
 builder.Services.ConfigureJwt(appSettings);
-
-builder.Services.ConfigureApiVersioning();
 
 builder.Services.ConfigureCors(builder.Configuration);
 
