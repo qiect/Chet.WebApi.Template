@@ -132,12 +132,17 @@ public static class DatabaseConfiguration
 
         try
         {
-            logger.LogInformation("Applying database migrations...");
-            
+            logger.LogInformation("Initializing database...");
+
             if (dbContext.Database.GetPendingMigrations().Any())
             {
                 await dbContext.Database.MigrateAsync();
                 logger.LogInformation("Database migrations applied successfully");
+            }
+            else if (!dbContext.Database.CanConnect())
+            {
+                await dbContext.Database.EnsureCreatedAsync();
+                logger.LogInformation("Database created successfully");
             }
             else
             {
